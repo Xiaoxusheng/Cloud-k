@@ -5,13 +5,9 @@
 
 
 ### Xorm官网
-```txt
 [Xorm](https://xorm.io/zh)
-```
 ### Go-redis
-```txt
 [Go-redis](https://redis.uptrace.dev/zh)
-```
 
 
 
