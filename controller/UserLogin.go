@@ -3,6 +3,7 @@ package controller
 import (
 	"Cloud-k/models"
 	"Cloud-k/uility"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -19,8 +20,13 @@ func Login(c *gin.Context) {
 		})
 		return
 	}
-	user := models.GetUser(username, password)
-	if user == nil {
+	user, err := models.GetUser(username, password)
+	if err != nil {
+		return
+	}
+
+	fmt.Println(user)
+	if user.Username == "" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
 			"msg":  "用户不存在！",

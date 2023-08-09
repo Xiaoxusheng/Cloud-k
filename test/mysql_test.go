@@ -17,6 +17,10 @@ func Test_mysql(t *testing.T) {
 	}
 	log.Println("连接成功")
 	exit, err := Engine.IsTableExist("user_basic")
+	err = Engine.DropTables("user_basic")
+	if err != nil {
+		return
+	}
 	if err != nil {
 		panic(err)
 	}

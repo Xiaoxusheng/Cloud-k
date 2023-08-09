@@ -13,7 +13,7 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	log.Println("连接成功")
+	log.Println("mysql连接成功")
 	Engine = db
 
 }

@@ -1,18 +1,33 @@
 package middleware
 
 import (
+	"Cloud-k/uility"
+	"fmt"
 	"github.com/gin-gonic/gin"
-	"log"
+	"net/http"
+	"strings"
+	"time"
 )
 
 func Error() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if err := c.Errors.Last(); err != nil {
-			// 在这里你可以将错误记录到日志文件、数据库或通过网络发送
-			log.Printf("发生错误: %v", err.Error())
-
-			// 你还可以添加更多的处理逻辑，比如将错误写入数据库等
-		}
+		defer func() {
+			if err := recover(); err != nil {
+				fmt.Println("err", err)
+				errorMessage := err.(uility.ErrorMessage)
+				determineErrorLevel(errorMessage)
+				// 根据错误级别发送邮件
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"error": errorMessage.ErrorDescription,
+				})
+			}
+		}()
 		c.Next()
+	}
+}
+
+func determineErrorLevel(errorMessage uility.ErrorMessage) {
+	if strings.Contains(errorMessage.ErrorType, "500") {
+		uility.SendErrorEmail("3096407768@qq.com", uility.ErrorMessage{ErrorDetails: errorMessage.ErrorDetails, ErrorDescription: errorMessage.ErrorDescription, ErrorType: "bug", ErrorTime: time.Now()})
 	}
 }
