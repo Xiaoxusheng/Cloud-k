@@ -21,6 +21,7 @@ import (
 	"time"
 )
 
+var msgChan = make(chan map[string]any, 10)
 var wg sync.WaitGroup
 
 func UploadFile(c *gin.Context) {
@@ -35,25 +36,42 @@ func UploadFile(c *gin.Context) {
 	for _, file := range files {
 		log.Println(file.Filename)
 		wg.Add(1)
-		go Upload(c, file, &i)
+		go Upload(file, &i)
 	}
 	wg.Wait()
+	select {
+	case msg := <-msgChan:
+		fmt.Println(msg)
+		c.JSON(http.StatusOK, msg)
+	default:
+		break
+	}
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  strconv.FormatInt(i, 10) + "个文件上传成功！",
 	})
+
 }
 
-func Upload(c *gin.Context, file *multipart.FileHeader, i *int64) {
-	log.Println("进入upload", file.Size)
+func Upload(file *multipart.FileHeader, i *int64) {
+	log.Println("进入upload", file.Size, (float64(file.Size)/(1024*1024)) > 1)
 	defer wg.Done()
-	if file.Filename == "" {
-		c.JSON(http.StatusOK, gin.H{
+	if (float64(file.Size) / (1024 * 1024)) > 50 {
+		msgChan <- map[string]any{
 			"code": 1,
-			"msg":  "file.Filename为空!",
-		})
+			"msg":  "文件大小不能超过50m!",
+		}
+		fmt.Println(123)
 		return
 	}
+
+	//if file.Filename == "" {
+	//	msgChan <- map[string]any{
+	//		"code": 1,
+	//		"msg":  "file.Filename为空!",
+	//	}
+	//	return
+	//}
 	//判断文件是否已经存在
 	open, err := file.Open()
 	if err != nil {
@@ -72,8 +90,6 @@ func Upload(c *gin.Context, file *multipart.FileHeader, i *int64) {
 	hash := fmt.Sprintf("%x", m.Sum(nil))
 	ok, err := models.GetByHash(hash)
 	if err != nil {
-		fmt.Println(err)
-
 		panic(uility.ErrorMessage{
 			uility.Error,
 			"repository_pool表查询出错" + err.Error(),
@@ -82,9 +98,7 @@ func Upload(c *gin.Context, file *multipart.FileHeader, i *int64) {
 		})
 	}
 	if ok {
-		fmt.Println("已经存在")
 		return
-		//os.Exit(-1)
 	}
 	u, _ := url.Parse("https://cloud-k-1308109276.cos.ap-nanjing.myqcloud.com")
 	b := &cos.BaseURL{BucketURL: u}
@@ -101,15 +115,13 @@ func Upload(c *gin.Context, file *multipart.FileHeader, i *int64) {
 	ctx := context.Background()
 	log.Println("op", bufio.NewReader(open).Size())
 	f, err := file.Open()
-	w, err := client.Object.Put(ctx, key, bufio.NewReader(f), nil)
+	_, err = client.Object.Put(ctx, key, bufio.NewReader(f), nil)
 	if err != nil {
-		fmt.Println(w, err)
 		panic(uility.ErrorMessage{
 			ErrorType:    uility.Warning,
 			ErrorDetails: "上传失败，错误在Upload函数" + err.Error(),
 		})
 	}
-
 	models.InsertFile(hash, name, ext, key, file.Size)
 	atomic.AddInt64(i, 1)
 	log.Println("完成")
@@ -126,10 +138,10 @@ func RepositorySave(c *gin.Context) {
 	}
 	f := models.GetByUserRepository(UserRepositorySave.UserIdentity, UserRepositorySave.RepositoryIdentity, UserRepositorySave.Name, UserRepositorySave.ParentId, UserRepositorySave.Ext)
 	if f {
-		c.JSON(http.StatusOK, gin.H{
+		msgChan <- map[string]any{
 			"code": 1,
 			"msg":  "数据已经存在!",
-		})
+		}
 		return
 	}
 	models.InsertUserRepository(UserRepositorySave)

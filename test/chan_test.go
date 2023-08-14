@@ -12,7 +12,7 @@ func TestChan(t *testing.T) {
 		file <- true
 	}
 	fmt.Println(len(file), cap(file))
-
+	fmt.Println(int64(float64(1035993088) / (1024 * 1024)))
 	for {
 		select {
 		case a := <-file:

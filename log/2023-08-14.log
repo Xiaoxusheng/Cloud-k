@@ -274,3 +274,213 @@ Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :80
+2023/08/14 20:17:17 7266002750796795155.mp4
+2023/08/14 20:17:17 进入upload 3779220
+2023/08/14 20:17:17 op 4096
+2023/08/14 20:17:18 完成
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 20:28:36 7266002750796795155.mp4
+2023/08/14 20:28:36 进入upload 3779220
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 20:29:51 CentOS-7-x86_64-Minimal-2207-02.iso
+2023/08/14 20:29:51 进入upload 1035993088
+2023/08/14 20:29:52 op 4096
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 20:37:50 CentOS-7-x86_64-Minimal-2207-02.iso
+2023/08/14 20:37:50 进入upload 1035993088
+2023/08/14 20:37:51 op 4096
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 20:38:46 CentOS-7-x86_64-Minimal-2207-02.iso
+2023/08/14 20:38:46 进入upload 1035993088
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 20:39:36 CentOS-7-x86_64-Minimal-2207-02.iso
+2023/08/14 20:39:36 进入upload 1035993088 988
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 20:41:46 CentOS-7-x86_64-Minimal-2207-02.iso
+2023/08/14 20:41:46 进入upload 1035993088 988
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 20:44:49 7264895484601421117.mp4
+2023/08/14 20:44:49 进入upload 4251622 4.054662704467773
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 20:46:23 7264895484601421117.mp4
+2023/08/14 20:46:23 进入upload 4251622 true
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 20:47:15 7264895484601421117.mp4
+2023/08/14 20:47:15 进入upload 4251622 true
+2023/08/14 20:47:29 7264895484601421117.mp4
+2023/08/14 20:47:29 进入upload 4251622 true
+2023/08/14 20:47:34 7264054592600624445.mp4
+2023/08/14 20:47:34 进入upload 2986051 true
+2023/08/14 20:47:35 7264054592600624445.mp4
+2023/08/14 20:47:35 进入upload 2986051 true
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 20:48:04 CentOS-7-x86_64-Minimal-2207-02.iso
+2023/08/14 20:48:04 进入upload 1035993088 true
+2023/08/14 20:49:30 我说今天怎么这么热，原来是我烧起来了bb#你的jk女孩#这样跳能俘获你的芳心吗#黑长直女孩#珍会扭#甜妹.mp4
+2023/08/14 20:49:30 进入upload 1732112 true
+2023/08/14 20:49:30 op 4096
+2023/08/14 20:49:31 完成
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 20:50:44 我说今天怎么这么热，原来是我烧起来了bb#你的jk女孩#这样跳能俘获你的芳心吗#黑长直女孩#珍会扭#甜妹.mp4
+2023/08/14 20:50:44 进入upload 1732112 true
+2023/08/14 20:50:44 op 4096
+2023/08/14 20:50:45 完成
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 20:51:44 我说今天怎么这么热，原来是我烧起来了bb#你的jk女孩#这样跳能俘获你的芳心吗#黑长直女孩#珍会扭#甜妹.mp4
+2023/08/14 20:51:44 进入upload 1732112 true
+2023/08/14 20:51:44 op 4096
+2023/08/14 20:51:45 完成
+2023/08/14 20:54:52 6849260736548523264.mp4
+2023/08/14 20:54:52 7250123119065632015.mp4
+2023/08/14 20:54:52 7252278807284010251.mp4
+2023/08/14 20:54:52 7261087711459626294.mp4
+2023/08/14 20:54:52 7262567695005142306.mp4
+2023/08/14 20:54:52 7262947314497588480.mp4
+2023/08/14 20:54:52 7263382880456412456.mp4
+2023/08/14 20:54:52 进入upload 1474614 true
+2023/08/14 20:54:52 进入upload 5380958 true
+2023/08/14 20:54:52 进入upload 1422301 true
+2023/08/14 20:54:52 进入upload 4783074 true
+2023/08/14 20:54:52 进入upload 2654268 true
+2023/08/14 20:54:52 进入upload 2359350 true
+2023/08/14 20:54:52 进入upload 3779220 true
+2023/08/14 20:54:52 op 4096
+2023/08/14 20:54:52 op 4096
+2023/08/14 20:54:52 op 4096
+2023/08/14 20:54:52 op 4096
+2023/08/14 20:54:52 op 4096
+2023/08/14 20:54:52 op 4096
+2023/08/14 20:54:52 op 4096
+2023/08/14 20:54:55 完成
+2023/08/14 20:54:56 完成
+2023/08/14 20:54:56 完成
+2023/08/14 20:54:56 完成
+2023/08/14 20:54:57 完成
+2023/08/14 20:54:58 完成
+2023/08/14 20:54:58 完成
+2023/08/14 20:55:04 6849260736548523264.mp4
+2023/08/14 20:55:04 7250123119065632015.mp4
+2023/08/14 20:55:04 进入upload 1474614 true
+2023/08/14 20:55:04 7252278807284010251.mp4
+2023/08/14 20:55:04 7261087711459626294.mp4
+2023/08/14 20:55:04 进入upload 1422301 true
+2023/08/14 20:55:04 进入upload 5380958 true
+2023/08/14 20:55:04 7262567695005142306.mp4
+2023/08/14 20:55:04 7262947314497588480.mp4
+2023/08/14 20:55:04 7263382880456412456.mp4
+2023/08/14 20:55:04 进入upload 4783074 true
+2023/08/14 20:55:04 进入upload 2654268 true
+2023/08/14 20:55:04 进入upload 3779220 true
+2023/08/14 20:55:04 进入upload 2359350 true
+2023/08/14 20:55:44 6849260736548523264.mp4
+2023/08/14 20:55:44 7250123119065632015.mp4
+2023/08/14 20:55:44 7252278807284010251.mp4
+2023/08/14 20:55:44 7261087711459626294.mp4
+2023/08/14 20:55:44 7262567695005142306.mp4
+2023/08/14 20:55:44 7262947314497588480.mp4
+2023/08/14 20:55:44 7263382880456412456.mp4
+2023/08/14 20:55:44 CentOS-7-x86_64-Minimal-2207-02.iso
+2023/08/14 20:55:44 进入upload 1422301 true
+2023/08/14 20:55:44 进入upload 1474614 true
+2023/08/14 20:55:44 进入upload 5380958 true
+2023/08/14 20:55:44 进入upload 4783074 true
+2023/08/14 20:55:44 进入upload 2654268 true
+2023/08/14 20:55:44 进入upload 3779220 true
+2023/08/14 20:55:44 进入upload 1035993088 true
+2023/08/14 20:55:44 进入upload 2359350 true
