@@ -30,7 +30,12 @@ func GetToken(Identity string) string {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	ss, err := token.SignedString(MySigningKey)
 	if err != nil {
-		panic(err)
+		panic(ErrorMessage{
+			Error,
+			err.Error(),
+			"GetToken函数",
+			time.Now(),
+		})
 	}
 	//生成token同时存入redis
 	//result, err := db.Rdb.Set(ctx, identification, ss, time.Hour*24).Result()

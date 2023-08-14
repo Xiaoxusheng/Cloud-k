@@ -31,3 +31,22 @@ func SendErrorEmail(code string, errormessage ErrorMessage) {
 	}
 	log.Println("发送成功！")
 }
+
+func SendEmail(emails, code string) {
+	e := email.NewEmail()
+	//发送者
+	e.From = "小学生 <2673893724@qq.com>"
+	//接收者
+	e.To = []string{emails}
+	//主题
+	e.Subject = "登录验证码"
+	//文本
+	e.Text = []byte("[小学生]您的登录验证码为：" + code)
+
+	err := e.SendWithStartTLS("smtp.qq.com:587", smtp.PlainAuth("", "2673893724@qq.com", "myucgbfyfcnodjch", "smtp.qq.com"), &tls.Config{InsecureSkipVerify: true, ServerName: "smtp.gmail.com:465"})
+	if err != nil {
+		log.Println("stmp:", err)
+
+	}
+	log.Println("发送成功！")
+}

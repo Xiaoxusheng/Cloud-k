@@ -13,15 +13,16 @@ func Router() *gin.Engine {
 	r.Use(middleware.Error())
 
 	//v 0.1 版本
-	r.POST("/user/v1/UserLogin", controller.Login)
-	r.POST("/user/v1/UserRegister", controller.UserRegister)
+	r.POST("/v1/user/UserLogin", controller.Login)
+	r.POST("/v1/user/UserRegister", controller.UserRegister)
 
-	user := r.Group("/user/v1", middleware.ParseToken())
+	user := r.Group("/v1/user", middleware.ParseToken())
 	user.GET("/UserDetail", controller.UserDetail)
 
 	//文件
-	file := r.Group("/files/v1", middleware.ParseToken())
-	file.GET("/")
+	file := r.Group("/v1/files", middleware.ParseToken())
+	file.GET("/fileDetail")
+	file.POST("/fileupload", controller.UploadFile)
 
 	return r
 

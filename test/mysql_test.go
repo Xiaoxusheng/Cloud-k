@@ -2,7 +2,6 @@ package test
 
 import (
 	"Cloud-k/models"
-	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"testing"
@@ -16,19 +15,9 @@ func Test_mysql(t *testing.T) {
 		return
 	}
 	log.Println("连接成功")
-	exit, err := Engine.IsTableExist("user_basic")
-	err = Engine.DropTables("user_basic")
-	if err != nil {
-		return
-	}
+
+	err = Engine.Sync2(new(models.User_basic))
 	if err != nil {
 		panic(err)
-	}
-	fmt.Println(exit)
-	if !exit {
-		err := Engine.Sync2(new(models.User_basic))
-		if err != nil {
-			panic(err)
-		}
 	}
 }

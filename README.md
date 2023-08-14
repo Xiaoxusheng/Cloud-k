@@ -10,6 +10,15 @@
 [Go-redis](https://redis.uptrace.dev/zh)
 
 
+## 开放端口
+```txt
+开放80端口
+firewall-cmd --zone=public --add-port=80/tcp --permanent
+重启防火墙
+systemctl restart firewalld.service
+```
+
+
 
 
 

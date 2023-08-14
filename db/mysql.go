@@ -9,11 +9,13 @@ import (
 var Engine *xorm.Engine
 
 func init() {
-	db, err := xorm.NewEngine("mysql", "root:admin123@/Cloud-k?charset=utf8")
+	//服务器密码为Admin123@
+	db, err := xorm.NewEngine("mysql", "root:admin123@/cloud-k?charset=utf8")
 	if err != nil {
 		panic(err)
 	}
 	log.Println("mysql连接成功")
 	Engine = db
+	Engine.ShowSQL(true)
 
 }

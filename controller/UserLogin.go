@@ -20,12 +20,9 @@ func Login(c *gin.Context) {
 		})
 		return
 	}
-	user, err := models.GetUser(username, password)
-	if err != nil {
-		return
-	}
+	user, err := models.GetUser(username, uility.GetMd5(password))
+	fmt.Println(user, err != nil)
 
-	fmt.Println(user)
 	if user.Username == "" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
@@ -33,6 +30,7 @@ func Login(c *gin.Context) {
 		})
 		return
 	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  "登录成功！",
@@ -42,11 +40,12 @@ func Login(c *gin.Context) {
 	})
 }
 
+// 用户注册
 func UserRegister(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 	email := c.PostForm("email")
-	if username == "" || password == "" || email != "" {
+	if username == "" || password == "" || email == "" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
 			"msg":  "必填参数不能为空！",
@@ -61,10 +60,23 @@ func UserRegister(c *gin.Context) {
 		return
 	}
 
+	if models.GetByUser(username) {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "用户名已经存在！",
+		})
+		return
+	}
+
 	models.InsertUser(username, uility.GetMd5(password), uility.GetUuid(), email)
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "注册成功！",
+	})
 
 }
 
+// 用户详情
 func UserDetail(c *gin.Context) {
 	identity := c.MustGet("identity")
 	if identity == "" {
