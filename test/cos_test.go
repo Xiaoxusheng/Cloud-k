@@ -2,10 +2,14 @@ package test
 
 import (
 	"Cloud-k/uility"
+	"bufio"
 	"context"
+	"fmt"
 	"github.com/tencentyun/cos-go-sdk-v5"
+	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"testing"
 )
 
@@ -27,13 +31,17 @@ func TestUpload(t *testing.T) {
 	//if err != nil {
 	//	panic(err)
 	//}
-	f := "1.jpg"
-
-	name := "cloud-k/" + f
+	g, _ := os.Open("1.jpg")
+	err := os.Setenv("SECRETID", uility.SECRETID)
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(os.Getenv("SECRETID"))
+	name := "cloud-k/" + "1.jpg"
 	ctx := context.Background()
 
 	// 1. 通过普通方式上传对象
-	_, err, _ := c.Object.Upload(ctx, name, f, nil)
+	_, err = c.Object.Put(ctx, name, bufio.NewReader(g), nil)
 	if err != nil {
 		panic(err)
 	}

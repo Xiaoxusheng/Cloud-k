@@ -35,7 +35,6 @@ func determineErrorLevel(errorMessage uility.ErrorMessage) {
 	if strings.Contains(errorMessage.ErrorType, "400") {
 		if uility.Count >= 10 {
 			uility.SendErrorEmail("3096407768@qq.com", uility.ErrorMessage{ErrorDetails: errorMessage.ErrorDetails, ErrorDescription: errorMessage.ErrorDescription, ErrorType: "bug", ErrorTime: time.Now()})
-
 		}
 		uility.Count++
 	}

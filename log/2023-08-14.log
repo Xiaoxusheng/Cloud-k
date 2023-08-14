@@ -1,0 +1,276 @@
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 17:12:00 7264547253702937912.mp4
+2023/08/14 17:12:00 7265591727912799527.mp4
+2023/08/14 17:12:00 进入upload
+2023/08/14 17:12:00 进入upload
+[GIN] 2023/08/14 - 17:12:00 |[97;42m 200 [0m|     26.2782ms |       127.0.0.1 |[97;46m POST    [0m "/v1/files/fileUpload"
+2023/08/14 17:12:37 7264547253702937912.mp4
+2023/08/14 17:12:37 7265591727912799527.mp4
+2023/08/14 17:12:37 进入upload
+2023/08/14 17:12:37 进入upload
+[GIN] 2023/08/14 - 17:12:37 |[97;42m 200 [0m|     25.0867ms |       127.0.0.1 |[97;46m POST    [0m "/v1/files/fileUpload"
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 17:26:34 7264895484601421117.jpg
+2023/08/14 17:26:34 7265591727912799527.mp4
+2023/08/14 17:26:34 进入upload
+2023/08/14 17:26:34 进入upload
+[GIN] 2023/08/14 - 17:26:35 |[97;42m 200 [0m|    1.2597389s |       127.0.0.1 |[97;46m POST    [0m "/v1/files/fileUpload"
+2023/08/14 17:28:19 7263767467103669539.jpg
+2023/08/14 17:28:19 进入upload
+[GIN] 2023/08/14 - 17:28:19 |[97;42m 200 [0m|    250.2952ms |       127.0.0.1 |[97;46m POST    [0m "/v1/files/fileUpload"
+2023/08/14 17:30:11 7265538243016363316.jpg
+2023/08/14 17:30:11 进入upload
+[GIN] 2023/08/14 - 17:30:11 |[97;42m 200 [0m|      218.56ms |       127.0.0.1 |[97;46m POST    [0m "/v1/files/fileUpload"
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 17:33:07 7265538243016363316.jpg
+2023/08/14 17:33:07 进入upload
+2023/08/14 17:33:09 7265538243016363316.jpg
+2023/08/14 17:33:09 进入upload
+2023/08/14 17:33:15 7265581356455857447.jpg
+2023/08/14 17:33:15 进入upload
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 17:39:10 7265581356455857447.jpg
+2023/08/14 17:39:10 进入upload
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 17:45:25 7262567695005142306.jpg
+2023/08/14 17:45:25 进入upload
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 17:50:02 7262567695005142306.jpg
+2023/08/14 17:50:02 进入upload
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 17:51:07 7265591727912799527.jpg
+2023/08/14 17:51:07 进入upload
+2023/08/14 17:51:50 7265591727912799527.jpg
+2023/08/14 17:51:50 进入upload
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 17:52:30 7266002750796795155.jpg
+2023/08/14 17:52:30 进入upload
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 17:53:46 7262567695005142306.jpg
+2023/08/14 17:53:46 进入upload
+2023/08/14 17:53:54 7264503206313479439.jpg
+2023/08/14 17:53:54 进入upload
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 17:55:08 7264424436374244642.jpg
+2023/08/14 17:55:08 进入upload
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 17:56:16 7265551215033929020.mp4
+2023/08/14 17:56:16 进入upload
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 17:57:16 7265551215033929020.mp4
+2023/08/14 17:57:16 进入upload 2359350
+[GIN] 2023/08/14 - 17:57:16 |[97;42m 200 [0m|     10.0402ms |       127.0.0.1 |[97;46m POST    [0m "/v1/files/fileUpload"
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+2023/08/14 17:59:15 7264054592600624445.mp4
+2023/08/14 17:59:15 进入upload 2986051
+[GIN] 2023/08/14 - 17:59:15 |[97;42m 200 [0m|    294.3103ms |       127.0.0.1 |[97;46m POST    [0m "/v1/files/fileUpload"
+2023/08/14 18:28:20 7264054592600624445.mp4
+2023/08/14 18:28:20 进入upload 2986051
+[GIN] 2023/08/14 - 18:28:20 |[97;42m 200 [0m|     415.708ms |       127.0.0.1 |[97;46m POST    [0m "/v1/files/fileUpload"
+2023/08/14 18:29:42 1.jpg
+2023/08/14 18:29:42 进入upload 213379
+[GIN] 2023/08/14 - 18:29:42 |[97;42m 200 [0m|    239.8433ms |       127.0.0.1 |[97;46m POST    [0m "/v1/files/fileUpload"
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+[GIN] 2023/08/14 - 18:33:16 |[97;42m 200 [0m|    276.5953ms |       127.0.0.1 |[97;46m POST    [0m "/v1/files/fileUpload"
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+[GIN-debug] POST   /v1/user/UserLogin        --> Cloud-k/controller.Login (5 handlers)
+[GIN-debug] POST   /v1/user/UserRegister     --> Cloud-k/controller.UserRegister (5 handlers)
+[GIN-debug] GET    /v1/user/UserDetail       --> Cloud-k/controller.UserDetail (6 handlers)
+[GIN-debug] GET    /v1/files/fileDetail      --> Cloud-k/middleware.ParseToken.func1 (5 handlers)
+[GIN-debug] POST   /v1/files/fileUpload      --> Cloud-k/controller.UploadFile (6 handlers)
+[GIN-debug] POST   /v1/files/repositorySave  --> Cloud-k/controller.RepositorySave (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80

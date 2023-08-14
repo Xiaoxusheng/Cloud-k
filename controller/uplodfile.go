@@ -45,7 +45,7 @@ func UploadFile(c *gin.Context) {
 }
 
 func Upload(c *gin.Context, file *multipart.FileHeader, i *int64) {
-	log.Println("进入upload")
+	log.Println("进入upload", file.Size)
 	defer wg.Done()
 	if file.Filename == "" {
 		c.JSON(http.StatusOK, gin.H{
@@ -69,10 +69,11 @@ func Upload(c *gin.Context, file *multipart.FileHeader, i *int64) {
 			ErrorDetails: "ioCopy" + err.Error(),
 		})
 	}
-
 	hash := fmt.Sprintf("%x", m.Sum(nil))
 	ok, err := models.GetByHash(hash)
 	if err != nil {
+		fmt.Println(err)
+
 		panic(uility.ErrorMessage{
 			uility.Error,
 			"repository_pool表查询出错" + err.Error(),
@@ -81,7 +82,9 @@ func Upload(c *gin.Context, file *multipart.FileHeader, i *int64) {
 		})
 	}
 	if ok {
+		fmt.Println("已经存在")
 		return
+		//os.Exit(-1)
 	}
 	u, _ := url.Parse("https://cloud-k-1308109276.cos.ap-nanjing.myqcloud.com")
 	b := &cos.BaseURL{BucketURL: u}
@@ -96,8 +99,11 @@ func Upload(c *gin.Context, file *multipart.FileHeader, i *int64) {
 	ext := path.Ext(file.Filename)
 	key := "cloud-k/" + name + ext
 	ctx := context.Background()
-	_, err = client.Object.Put(ctx, key, bufio.NewReader(open), nil)
+	log.Println("op", bufio.NewReader(open).Size())
+	f, err := file.Open()
+	w, err := client.Object.Put(ctx, key, bufio.NewReader(f), nil)
 	if err != nil {
+		fmt.Println(w, err)
 		panic(uility.ErrorMessage{
 			ErrorType:    uility.Warning,
 			ErrorDetails: "上传失败，错误在Upload函数" + err.Error(),
@@ -106,4 +112,25 @@ func Upload(c *gin.Context, file *multipart.FileHeader, i *int64) {
 
 	models.InsertFile(hash, name, ext, key, file.Size)
 	atomic.AddInt64(i, 1)
+	log.Println("完成")
+}
+
+func RepositorySave(c *gin.Context) {
+	UserRepositorySave := new(uility.UserRepositorySave)
+	err := c.BindJSON(&UserRepositorySave)
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorType:    uility.Warning,
+			ErrorDetails: "解析json失败：" + err.Error(),
+		})
+	}
+	f := models.GetByUserRepository(UserRepositorySave.UserIdentity, UserRepositorySave.RepositoryIdentity, UserRepositorySave.Name, UserRepositorySave.ParentId, UserRepositorySave.Ext)
+	if f {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "数据已经存在!",
+		})
+		return
+	}
+	models.InsertUserRepository(UserRepositorySave)
 }

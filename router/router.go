@@ -22,7 +22,8 @@ func Router() *gin.Engine {
 	//文件
 	file := r.Group("/v1/files", middleware.ParseToken())
 	file.GET("/fileDetail")
-	file.POST("/fileupload", controller.UploadFile)
+	file.POST("/fileUpload", controller.UploadFile)
+	file.POST("/repositorySave", controller.RepositorySave)
 
 	return r
 
