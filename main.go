@@ -4,6 +4,7 @@ import (
 	"Cloud-k/router"
 	"Cloud-k/uility"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 func main() {
@@ -15,6 +16,6 @@ func main() {
 
 	err := r.Run(":80")
 	if err != nil {
-		panic("服务器启动失败" + err.Error())
+		log.Fatalln("服务器启动失败" + err.Error())
 	}
 }

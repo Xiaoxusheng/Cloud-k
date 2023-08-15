@@ -10,7 +10,7 @@ var Engine *xorm.Engine
 
 func init() {
 	//服务器密码为Admin123@
-	db, err := xorm.NewEngine("mysql", "root:admin123@/cloud-k?charset=utf8")
+	db, err := xorm.NewEngine("mysql", "root:Admin123@@/cloud-k?charset=utf8")
 	if err != nil {
 		panic(err)
 	}

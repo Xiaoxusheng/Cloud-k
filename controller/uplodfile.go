@@ -16,15 +16,17 @@ import (
 	"net/url"
 	"path"
 	"strconv"
-	"sync"
 	"sync/atomic"
 	"time"
 )
 
-var msgChan = make(chan map[string]any, 10)
-var wg sync.WaitGroup
+var msgChan = make(chan int, 10)
+var finShell = make(chan bool, 100)
+
+//var wg sync.WaitGroup
 
 func UploadFile(c *gin.Context) {
+	t := time.Now()
 	form, err := c.MultipartForm()
 	if err != nil {
 		panic(uility.ErrorMessage{
@@ -33,45 +35,57 @@ func UploadFile(c *gin.Context) {
 	}
 	files := form.File["file"]
 	var i int64 = 0
+	var m int64 = 0
+	var n int64 = 0
+	b := false
+	v := false
 	for _, file := range files {
 		log.Println(file.Filename)
-		wg.Add(1)
 		go Upload(file, &i)
 	}
-	wg.Wait()
-	select {
-	case msg := <-msgChan:
-		fmt.Println(msg)
-		c.JSON(http.StatusOK, msg)
-	default:
-		break
+	for {
+		if b && v {
+			break
+		}
+		select {
+		case msg := <-msgChan:
+			fmt.Println(len(msgChan))
+			if msg == 1 {
+				atomic.AddInt64(&m, 1)
+			} else if msg == 2 {
+				atomic.AddInt64(&n, 1)
+			}
+			//有不符合规定的文件
+			if len(msgChan) == 0 && int(m+i+n) == len(files) {
+				b = true
+			}
+		case <-finShell:
+			//finShell全部完成，和int(m+i+n) == len(files)说明读取完毕
+			if len(finShell) == 0 {
+				v = true
+			}
+			if int(m+i+n) == len(files) {
+				b = true
+			}
+		}
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
-		"msg":  strconv.FormatInt(i, 10) + "个文件上传成功！",
+		"data": "",
+		"msg":  strconv.FormatInt(i, 10) + "个文件上传成功！" + strconv.FormatInt(m, 10) + "文件大小超过50m," + strconv.FormatInt(n, 10) + "个文件云盘中文件已存在",
 	})
+	t2 := time.Now()
+	fmt.Println("经过时间", t2.Sub(t))
 
 }
 
 func Upload(file *multipart.FileHeader, i *int64) {
-	log.Println("进入upload", file.Size, (float64(file.Size)/(1024*1024)) > 1)
-	defer wg.Done()
+	log.Println("进入upload", file.Size, (float64(file.Size)/(1024*1024)) > 50)
 	if (float64(file.Size) / (1024 * 1024)) > 50 {
-		msgChan <- map[string]any{
-			"code": 1,
-			"msg":  "文件大小不能超过50m!",
-		}
-		fmt.Println(123)
+		msgChan <- 1
+		finShell <- true
 		return
 	}
-
-	//if file.Filename == "" {
-	//	msgChan <- map[string]any{
-	//		"code": 1,
-	//		"msg":  "file.Filename为空!",
-	//	}
-	//	return
-	//}
 	//判断文件是否已经存在
 	open, err := file.Open()
 	if err != nil {
@@ -98,6 +112,8 @@ func Upload(file *multipart.FileHeader, i *int64) {
 		})
 	}
 	if ok {
+		msgChan <- 2
+		finShell <- true
 		return
 	}
 	u, _ := url.Parse("https://cloud-k-1308109276.cos.ap-nanjing.myqcloud.com")
@@ -124,6 +140,7 @@ func Upload(file *multipart.FileHeader, i *int64) {
 	}
 	models.InsertFile(hash, name, ext, key, file.Size)
 	atomic.AddInt64(i, 1)
+	finShell <- true
 	log.Println("完成")
 }
 
@@ -138,10 +155,10 @@ func RepositorySave(c *gin.Context) {
 	}
 	f := models.GetByUserRepository(UserRepositorySave.UserIdentity, UserRepositorySave.RepositoryIdentity, UserRepositorySave.Name, UserRepositorySave.ParentId, UserRepositorySave.Ext)
 	if f {
-		msgChan <- map[string]any{
+		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
 			"msg":  "数据已经存在!",
-		}
+		})
 		return
 	}
 	models.InsertUserRepository(UserRepositorySave)
