@@ -3,7 +3,6 @@ package models
 import (
 	"Cloud-k/db"
 	"Cloud-k/uility"
-	"log"
 	"time"
 )
 
@@ -17,7 +16,7 @@ type Repository_pool struct {
 	Path       string    `json:"path"`
 	Created_at time.Time `json:"created_At" xorm:"created"`
 	Updated_at time.Time `json:"updated_At" xorm:"updated"`
-	Deleted_at time.Time `json:"deleted_At"`
+	Deleted_at time.Time `json:"deleted_At " `
 }
 
 func GetByHash(hash string) (bool, error) {
@@ -41,6 +40,11 @@ func InsertFile(hash, name, ext, path string, size int64) {
 			Path:     "https://cloud-k-1308109276.cos.ap-nanjing.myqcloud.com/" + path,
 		})
 	if err != nil {
-		log.Println("插入出错" + err.Error())
+		panic(uility.ErrorMessage{
+			ErrorType:        uility.Error,
+			ErrorDescription: "user_basic表查询出错" + err.Error(),
+			ErrorTime:        time.Now(),
+			ErrorDetails:     "InsertFile函数",
+		})
 	}
 }

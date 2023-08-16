@@ -24,7 +24,10 @@ func Router() *gin.Engine {
 	file.GET("/fileDetail")
 	file.POST("/fileUpload", controller.UploadFile)
 	file.POST("/repositorySave", controller.RepositorySave)
-
+	file.GET("/fileList", controller.FileList)
+	file.PUT("/fileNameUpdate", controller.UpdateFileName)
+	file.GET("/folderCreate", controller.CreateFolder)
+	file.DELETE("/fileDelete", controller.DeleteFile)
 	return r
 
 }

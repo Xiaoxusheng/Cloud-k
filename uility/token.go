@@ -61,6 +61,7 @@ func GetMd5(pwd string) string {
 	return fmt.Sprintf("%x", md5.Sum([]byte(pwd)))
 }
 
+// 记录日志文件
 func CreateLogFile() {
 	//现在的时间
 	t := time.Now()

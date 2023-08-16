@@ -58,7 +58,7 @@ func ParseToken() gin.HandlerFunc {
 			panic(ErrorMessage)
 		}
 
-		c.Set("identity", user.Identity)
+		c.Set("UserIdentity", user.Identity)
 		//fmt.Println("username", user.Identification)
 		//result, err := db.Rdb.Get(ctx, user.Identification).Result()
 		//if err != nil {

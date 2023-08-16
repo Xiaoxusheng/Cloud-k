@@ -21,9 +21,7 @@ import (
 )
 
 var msgChan = make(chan int, 10)
-var finShell = make(chan bool, 100)
-
-//var wg sync.WaitGroup
+var finShellChan = make(chan bool, 100)
 
 func UploadFile(c *gin.Context) {
 	t := time.Now()
@@ -43,6 +41,7 @@ func UploadFile(c *gin.Context) {
 		log.Println(file.Filename)
 		go Upload(file, &i)
 	}
+	//阻塞等待所有协程完成
 	for {
 		if b && v {
 			break
@@ -59,9 +58,9 @@ func UploadFile(c *gin.Context) {
 			if len(msgChan) == 0 && int(m+i+n) == len(files) {
 				b = true
 			}
-		case <-finShell:
+		case <-finShellChan:
 			//finShell全部完成，和int(m+i+n) == len(files)说明读取完毕
-			if len(finShell) == 0 {
+			if len(finShellChan) == 0 {
 				v = true
 			}
 			if int(m+i+n) == len(files) {
@@ -83,7 +82,7 @@ func Upload(file *multipart.FileHeader, i *int64) {
 	log.Println("进入upload", file.Size, (float64(file.Size)/(1024*1024)) > 50)
 	if (float64(file.Size) / (1024 * 1024)) > 50 {
 		msgChan <- 1
-		finShell <- true
+		finShellChan <- true
 		return
 	}
 	//判断文件是否已经存在
@@ -113,7 +112,7 @@ func Upload(file *multipart.FileHeader, i *int64) {
 	}
 	if ok {
 		msgChan <- 2
-		finShell <- true
+		finShellChan <- true
 		return
 	}
 	u, _ := url.Parse("https://cloud-k-1308109276.cos.ap-nanjing.myqcloud.com")
@@ -140,20 +139,22 @@ func Upload(file *multipart.FileHeader, i *int64) {
 	}
 	models.InsertFile(hash, name, ext, key, file.Size)
 	atomic.AddInt64(i, 1)
-	finShell <- true
+	finShellChan <- true
 	log.Println("完成")
 }
 
 func RepositorySave(c *gin.Context) {
 	UserRepositorySave := new(uility.UserRepositorySave)
-	err := c.BindJSON(&UserRepositorySave)
+	err := c.ShouldBindJSON(&UserRepositorySave)
 	if err != nil {
 		panic(uility.ErrorMessage{
-			ErrorType:    uility.Warning,
-			ErrorDetails: "解析json失败：" + err.Error(),
+			ErrorType:        uility.Warning,
+			ErrorDescription: "解析json失败：" + err.Error(),
 		})
 	}
-	f := models.GetByUserRepository(UserRepositorySave.UserIdentity, UserRepositorySave.RepositoryIdentity, UserRepositorySave.Name, UserRepositorySave.ParentId, UserRepositorySave.Ext)
+	UserIdentity := c.MustGet("UserIdentity").(string)
+	//查询
+	f := models.GetByUserRepository(UserIdentity, UserRepositorySave.Repository_identity)
 	if f {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
@@ -161,5 +162,152 @@ func RepositorySave(c *gin.Context) {
 		})
 		return
 	}
+	UserRepositorySave.UserIdentity = UserIdentity
 	models.InsertUserRepository(UserRepositorySave)
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "插入成功",
+	})
+}
+
+func FileList(c *gin.Context) {
+	//页数
+	page := c.DefaultQuery("page", "1")
+	//每页数量默认为20条
+	number := c.DefaultQuery("number", "20")
+
+	parent_id := c.Query("parent_id")
+
+	if parent_id == "" {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "必填参数不能为空!",
+		})
+		return
+	}
+	Page, err := strconv.Atoi(page)
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorType:        uility.Error,
+			ErrorTime:        time.Now(),
+			ErrorDescription: err.Error(),
+		})
+	}
+	Number, err := strconv.Atoi(number)
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorType:        uility.Error,
+			ErrorTime:        time.Now(),
+			ErrorDescription: err.Error(),
+		})
+	}
+	fmt.Println(c.MustGet("UserIdentity").(string))
+	fileList := models.GetFileList(Page, Number, c.MustGet("UserIdentity").(string), parent_id)
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "获取数据成功!",
+		"data": gin.H{
+			"filelist": fileList,
+		},
+	})
+
+}
+
+func UpdateFileName(c *gin.Context) {
+	identity := c.Query("identity")
+	name := c.Query("name")
+	if identity == "" || name == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "必填参数不能为空!",
+		})
+		return
+	}
+	userIdentity := c.MustGet("UserIdentity").(string)
+	k := models.GetByIdentity(identity, userIdentity)
+	if !k {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "文件不存在!",
+		})
+		return
+	}
+
+	f := models.GetByName(name)
+	if f {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "文件名称已经存在!请更换名称",
+		})
+		return
+	}
+
+	models.UpDateFileName(name, identity, userIdentity)
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "文件名称修改成功!",
+	})
+
+}
+
+func CreateFolder(c *gin.Context) {
+	parent_id := c.Query("parent_id")
+	name := c.Query("name")
+	if parent_id == "" || name == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "必填参数不能为空!",
+		})
+		return
+	}
+	userIdentity := c.MustGet("UserIdentity").(string)
+	ok := models.GetByNameParentId(name, parent_id)
+	if ok {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "该名称已经存在!请更换名称",
+		})
+		return
+	}
+	Parent_id, err := strconv.Atoi(parent_id)
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorType:        err.Error(),
+			ErrorDescription: "user_basic表插入出错" + err.Error(),
+			ErrorTime:        time.Now(),
+		})
+	}
+	models.InsertFolder(userIdentity, name, Parent_id)
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "文件夹创建成功!",
+	})
+}
+
+func DeleteFile(c *gin.Context) {
+	identity := c.Query("identity")
+	if identity == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "必填参数不能为空!",
+		})
+		return
+	}
+	userIdentity := c.MustGet("UserIdentity").(string)
+	//查询文件是否存在
+	f := models.GetByIdentityUserIdentity(identity, userIdentity)
+	if !f {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "文件不存在!",
+		})
+		return
+	}
+
+	models.DeleteFile(identity, userIdentity)
+	c.JSON(http.StatusBadRequest, gin.H{
+		"code": 200,
+		"msg":  "删除成功!",
+	})
 }
