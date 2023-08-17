@@ -15,7 +15,7 @@ type User_basic struct {
 	Password  string    ` json:"password,omitempty" form:"password" binding:"required,min=5,max=10"  form:"password" `
 	Email     string    ` json:"email,omitempty" binding:"required email"`
 	CreatedAt time.Time `xorm:"created " json:"createdAt,omitempty"`
-	UpdateAt  time.Time `xorm:"updated  " json:"updatedAat,omitempty" `
+	UpdatedAt time.Time `xorm:"updated  " json:"updatedAat,omitempty" `
 	DeleteAt  time.Time `xorm:"deleted  " json:"deleteAtt,omitempty"`
 }
 

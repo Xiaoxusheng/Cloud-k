@@ -16,9 +16,15 @@
 firewall-cmd --zone=public --add-port=80/tcp --permanent
 重启防火墙
 systemctl restart firewalld.service
+
 ```
 
+## 修改环境
+```txt
+go env -w GOOS=windows
+go env GOOS
 
+```
 
 
 

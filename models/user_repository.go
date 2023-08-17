@@ -156,7 +156,7 @@ func DeleteFile(identity, user_identity string) {
 	}
 }
 
-func GetByIdentityUserIdentity(identity, user_identity string) bool {
+func GetByIdentityUserIdentity(identity, user_identity string) (bool, *User_repository) {
 	user_repository := new(User_repository)
 	has, err := db.Engine.Where("identity=? and user_identity=? ", identity, user_identity).Get(user_repository)
 	if err != nil {
@@ -164,8 +164,20 @@ func GetByIdentityUserIdentity(identity, user_identity string) bool {
 			ErrorType:        uility.Error,
 			ErrorDetails:     "DeleteFile函数",
 			ErrorTime:        time.Now(),
-			ErrorDescription: "User_repository表删除" + err.Error(),
+			ErrorDescription: "User_repository查询" + err.Error(),
 		})
 	}
-	return has
+	return has, user_repository
+}
+
+func UpdateFileParentId(identity string, id int) {
+	_, err := db.Engine.Where("identity=?", identity).Update("Parent_id", id)
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorType:        uility.Error,
+			ErrorDetails:     "UpdateFileParentId函数",
+			ErrorTime:        time.Now(),
+			ErrorDescription: "User_repository表更新" + err.Error(),
+		})
+	}
 }

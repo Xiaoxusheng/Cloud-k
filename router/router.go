@@ -21,13 +21,20 @@ func Router() *gin.Engine {
 
 	//文件
 	file := r.Group("/v1/files", middleware.ParseToken())
-	file.GET("/fileDetail")
 	file.POST("/fileUpload", controller.UploadFile)
 	file.POST("/repositorySave", controller.RepositorySave)
 	file.GET("/fileList", controller.FileList)
 	file.PUT("/fileNameUpdate", controller.UpdateFileName)
 	file.GET("/folderCreate", controller.CreateFolder)
 	file.DELETE("/fileDelete", controller.DeleteFile)
+	file.PUT("/fileMove", controller.MoveFile)
+
+	//资源分享
+	ShareBasic := r.Group("/v1/files", middleware.ParseToken())
+	ShareBasic.GET("/ShareBasicCreate", controller.ShareBasicCreate)
+	ShareBasic.GET("/ShareBasicDetail", controller.ShareBasicDetail)
+	ShareBasic.POST("/ShareBasicSave", controller.ShareBasicSave)
+
 	return r
 
 }

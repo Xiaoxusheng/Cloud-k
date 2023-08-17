@@ -296,7 +296,7 @@ func DeleteFile(c *gin.Context) {
 	}
 	userIdentity := c.MustGet("UserIdentity").(string)
 	//查询文件是否存在
-	f := models.GetByIdentityUserIdentity(identity, userIdentity)
+	f, _ := models.GetByIdentityUserIdentity(identity, userIdentity)
 	if !f {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code": 1,
@@ -310,4 +310,35 @@ func DeleteFile(c *gin.Context) {
 		"code": 200,
 		"msg":  "删除成功!",
 	})
+}
+
+func MoveFile(c *gin.Context) {
+	//目的文件夹的唯一id
+	parent_id := c.Query("parent_identity")
+	//文件的唯一id
+	identity := c.Query("identity")
+
+	if parent_id == "" || identity == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "必填参数不能为空!",
+		})
+		return
+	}
+	//查询目的文件夹是否存在
+	userIdentity := c.MustGet("UserIdentity").(string)
+	f, user := models.GetByIdentityUserIdentity(parent_id, userIdentity)
+	if !f {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "文件夹不存在!",
+		})
+		return
+	}
+	models.UpdateFileParentId(identity, user.Id)
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "文件移动成功!",
+	})
+
 }
