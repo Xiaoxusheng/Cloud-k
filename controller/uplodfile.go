@@ -161,7 +161,7 @@ func RepositorySave(c *gin.Context) {
 	//查询
 	f := models.GetByUserRepository(UserIdentity, UserRepositorySave.Repository_identity)
 	if f {
-		c.JSON(http.StatusOK, gin.H{
+		c.JSON(http.StatusBadRequest, gin.H{
 			"code": 1,
 			"msg":  "数据已经存在!",
 		})
@@ -184,7 +184,7 @@ func FileList(c *gin.Context) {
 	parent_id := c.Query("parent_id")
 
 	if parent_id == "" {
-		c.JSON(http.StatusOK, gin.H{
+		c.JSON(http.StatusBadRequest, gin.H{
 			"code": 1,
 			"msg":  "必填参数不能为空!",
 		})

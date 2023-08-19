@@ -37,6 +37,16 @@ func Login(c *gin.Context) {
 	n := 24
 	token := uility.GetToken(user.Identity, m)
 	refresh_token := uility.GetToken(user.Identity, n)
+	//设置用户唯一identity
+	ctx := context.Background()
+	res, err := db.Rdb.HSet(ctx, user.Identity, "token", token, "refresh_token", refresh_token).Result()
+	fmt.Println(res)
+	db.Rdb.Expire(ctx, user.Identity, time.Hour*24)
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorDescription: "redis获取失败!",
+		})
+	}
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  "登录成功！",
@@ -45,15 +55,7 @@ func Login(c *gin.Context) {
 			"refresh_token": refresh_token,
 		},
 	})
-	//设置用户唯一identity
-	ctx := context.Background()
-	_, err = db.Rdb.HSet(ctx, user.Identity, "token", token, "refresh_token", refresh_token).Result()
-	db.Rdb.Expire(ctx, user.Identity, time.Hour*24)
-	if err != nil {
-		panic(uility.ErrorMessage{
-			ErrorDescription: "redis获取失败",
-		})
-	}
+
 }
 
 // 用户注册
@@ -62,14 +64,14 @@ func UserRegister(c *gin.Context) {
 	password := c.PostForm("password")
 	email := c.PostForm("email")
 	if username == "" || password == "" || email == "" {
-		c.JSON(http.StatusOK, gin.H{
+		c.JSON(http.StatusBadRequest, gin.H{
 			"code": 1,
 			"msg":  "必填参数不能为空！",
 		})
 		return
 	}
 	if ok := models.GetEmail(email); ok {
-		c.JSON(http.StatusOK, gin.H{
+		c.JSON(http.StatusBadRequest, gin.H{
 			"code": 1,
 			"msg":  "邮箱已经存在！",
 		})
@@ -77,7 +79,7 @@ func UserRegister(c *gin.Context) {
 	}
 
 	if models.GetByUser(username) {
-		c.JSON(http.StatusOK, gin.H{
+		c.JSON(http.StatusBadRequest, gin.H{
 			"code": 1,
 			"msg":  "用户名已经存在！",
 		})
@@ -96,7 +98,7 @@ func UserRegister(c *gin.Context) {
 func UserDetail(c *gin.Context) {
 	identity, ok := c.Get("UserIdentity")
 	if !ok {
-		c.JSON(http.StatusOK, gin.H{
+		c.JSON(http.StatusBadRequest, gin.H{
 			"code": 1,
 			"msg":  "获取用户详情失败！",
 		})
@@ -110,5 +112,24 @@ func UserDetail(c *gin.Context) {
 			"userdetil": userDetil,
 		},
 	})
+
+}
+
+// 退出登录
+func Logout(c *gin.Context) {
+	ctx := context.Background()
+	UserIdentity := c.MustGet("UserIdentity").(string)
+	result, err := db.Rdb.Del(ctx, UserIdentity).Result()
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorDescription: "redis获取失败!",
+		})
+	}
+	if result == 1 {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 200,
+			"msg":  "退出成功!",
+		})
+	}
 
 }

@@ -72,14 +72,24 @@ func ParseToken() gin.HandlerFunc {
 		c.Set("UserIdentity", user.Identity)
 		//fmt.Println("username", user.Identification)
 		ctx := context.Background()
+		exit, _ := db.Rdb.Exists(ctx, user.Identity).Result()
+		fmt.Println("exit", exit)
+		if exit != 1 {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"code": 1,
+				"msg":  "已经退出登录!",
+			})
+			c.Abort()
+			return
+		}
 		t, err := db.Rdb.HGet(ctx, user.Identity, "token").Result()
 		rt, err := db.Rdb.HGet(ctx, user.Identity, "refresh_token").Result()
 		if err != nil {
 			ErrorMessage.ErrorDescription = "redis获取失败!"
 			panic(ErrorMessage)
 		}
-		fmt.Println(t, rt)
-		if t != tokenString[len(tokenString)-1] || rt != tokenString[len(tokenString)-1] {
+		//fmt.Println(t, "\n", rt)
+		if t != tokenString[len(tokenString)-1] && rt != tokenString[len(tokenString)-1] {
 			c.JSON(http.StatusOK, gin.H{
 				"code": 1,
 				"msg":  "账号在其他地方登录，只允许一台设备登录！",

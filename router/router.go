@@ -19,6 +19,7 @@ func Router() *gin.Engine {
 
 	user := r.Group("/v1/user", middleware.ParseToken())
 	user.GET("/UserDetail", controller.UserDetail)
+	user.GET("/logout", controller.Logout)
 
 	//文件
 	file := r.Group("/v1/files", middleware.ParseToken())
