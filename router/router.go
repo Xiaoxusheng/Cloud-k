@@ -9,6 +9,7 @@ import (
 func Router() *gin.Engine {
 	r := gin.Default()
 	r.Use(middleware.Core())
+	r.Use(middleware.ParseTakeToken())
 	//r.Use(gin.Recovery())
 	r.Use(middleware.Error())
 
@@ -24,6 +25,7 @@ func Router() *gin.Engine {
 	file.POST("/fileUpload", controller.UploadFile)
 	file.POST("/repositorySave", controller.RepositorySave)
 	file.GET("/fileList", controller.FileList)
+	file.GET("/folderList", controller.FolderList)
 	file.PUT("/fileNameUpdate", controller.UpdateFileName)
 	file.GET("/folderCreate", controller.CreateFolder)
 	file.DELETE("/fileDelete", controller.DeleteFile)
@@ -34,6 +36,8 @@ func Router() *gin.Engine {
 	ShareBasic.GET("/ShareBasicCreate", controller.ShareBasicCreate)
 	ShareBasic.GET("/ShareBasicDetail", controller.ShareBasicDetail)
 	ShareBasic.POST("/ShareBasicSave", controller.ShareBasicSave)
+
+	r.GET("/v1/refresh/authorization", middleware.ParseToken(), controller.RefreshToken)
 
 	return r
 

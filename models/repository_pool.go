@@ -7,16 +7,16 @@ import (
 )
 
 type Repository_pool struct {
-	Id         int       `json:"id"`
-	Identity   string    `json:"identity"`
-	Hash       string    `json:"hash"` //内容唯一hash
-	Name       string    `json:"name"`
-	Ext        string    `json:"ext"`
-	Size       int64     `json:"size"`
-	Path       string    `json:"path"`
-	Created_at time.Time `json:"created_At" xorm:"created"`
-	Updated_at time.Time `json:"updated_At" xorm:"updated"`
-	Deleted_at time.Time `json:"deleted_At " `
+	Id        int       `json:"id"`
+	Identity  string    `json:"identity"`
+	Hash      string    `json:"hash"` //内容唯一hash
+	Name      string    `json:"name"`
+	Ext       string    `json:"ext"`
+	Size      int64     `json:"size"`
+	Path      string    `json:"path"`
+	CreatedAt time.Time `json:"created_at" xorm:"created"`
+	UpdatedAt time.Time `json:"updated_at" xorm:"updated"`
+	DeletedAt time.Time `json:"deleted_at " `
 }
 
 func GetByHash(hash string) (bool, error) {
@@ -42,9 +42,23 @@ func InsertFile(hash, name, ext, path string, size int64) {
 	if err != nil {
 		panic(uility.ErrorMessage{
 			ErrorType:        uility.Error,
-			ErrorDescription: "user_basic表查询出错" + err.Error(),
+			ErrorDescription: "repository_pool表插入出错" + err.Error(),
 			ErrorTime:        time.Now(),
 			ErrorDetails:     "InsertFile函数",
 		})
 	}
+}
+
+func GetByRepositoryPool(identity string) (bool, *Repository_pool) {
+	repository_pool := new(Repository_pool)
+	has, err := db.Engine.Where("identity=?", identity).Get(repository_pool)
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorType:        uility.Error,
+			ErrorDescription: "repository_pool表查询出错" + err.Error(),
+			ErrorTime:        time.Now(),
+			ErrorDetails:     "GetByRepositoryPool函数",
+		})
+	}
+	return has, repository_pool
 }

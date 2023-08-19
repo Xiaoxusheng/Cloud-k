@@ -30,12 +30,12 @@ func Login(c *gin.Context) {
 		})
 		return
 	}
-
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  "登录成功！",
 		"data": gin.H{
-			"token": uility.GetToken(user.Identity),
+			"token":         uility.GetToken(user.Identity, 2),
+			"refresh_token": uility.GetToken(user.Identity, 24),
 		},
 	})
 }
@@ -78,8 +78,8 @@ func UserRegister(c *gin.Context) {
 
 // 用户详情
 func UserDetail(c *gin.Context) {
-	identity := c.MustGet("identity")
-	if identity == "" {
+	identity, ok := c.Get("UserIdentity")
+	if !ok {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
 			"msg":  "获取用户详情失败！",

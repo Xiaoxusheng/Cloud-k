@@ -171,7 +171,9 @@ func GetByIdentityUserIdentity(identity, user_identity string) (bool, *User_repo
 }
 
 func UpdateFileParentId(identity string, id int) {
-	_, err := db.Engine.Where("identity=?", identity).Update("Parent_id", id)
+	user_repository := new(User_repository)
+	user_repository.ParentId = id
+	_, err := db.Engine.Where("identity=?", identity).Update(user_repository)
 	if err != nil {
 		panic(uility.ErrorMessage{
 			ErrorType:        uility.Error,
@@ -180,4 +182,32 @@ func UpdateFileParentId(identity string, id int) {
 			ErrorDescription: "User_repository表更新" + err.Error(),
 		})
 	}
+}
+
+func GetByUseIdentityRepositoryIdentity(user_identity, repository_identity string) bool {
+	user_repository := new(User_repository)
+	has, err := db.Engine.Where("user_identity=? and repository_identity=? ", user_identity, repository_identity).Get(user_repository)
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorType:        uility.Error,
+			ErrorDetails:     "GetByUseIdentityRepositoryIdentity函数",
+			ErrorTime:        time.Now(),
+			ErrorDescription: "User_repository表查询" + err.Error(),
+		})
+	}
+	return has
+}
+
+func GetByUseIdentityRepositoryIdentityList(user_identity, repository_identity string) []User_repository {
+	user_repository := make([]User_repository, 0)
+	err := db.Engine.Where("user_identity=? and repository_identity=? ", user_identity, repository_identity).Find(&user_repository)
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorType:        uility.Error,
+			ErrorDetails:     "GetByUseIdentityRepositoryIdentity函数",
+			ErrorTime:        time.Now(),
+			ErrorDescription: "User_repository表查询" + err.Error(),
+		})
+	}
+	return user_repository
 }

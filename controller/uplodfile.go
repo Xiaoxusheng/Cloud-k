@@ -28,7 +28,7 @@ func UploadFile(c *gin.Context) {
 	form, err := c.MultipartForm()
 	if err != nil {
 		panic(uility.ErrorMessage{
-			ErrorDetails: err.Error(),
+			ErrorDescription: err.Error(),
 		})
 	}
 	files := form.File["file"]
@@ -75,7 +75,6 @@ func UploadFile(c *gin.Context) {
 	})
 	t2 := time.Now()
 	fmt.Println("经过时间", t2.Sub(t))
-
 }
 
 func Upload(file *multipart.FileHeader, i *int64) {
@@ -130,7 +129,13 @@ func Upload(file *multipart.FileHeader, i *int64) {
 	ctx := context.Background()
 	log.Println("op", bufio.NewReader(open).Size())
 	f, err := file.Open()
-	_, err = client.Object.Put(ctx, key, bufio.NewReader(f), nil)
+
+	reader := &uility.Reader{
+		Reader: f,
+		Total:  file.Size,
+	}
+
+	_, err = client.Object.Put(ctx, key, reader, nil)
 	if err != nil {
 		panic(uility.ErrorMessage{
 			ErrorType:    uility.Warning,
@@ -314,11 +319,11 @@ func DeleteFile(c *gin.Context) {
 
 func MoveFile(c *gin.Context) {
 	//目的文件夹的唯一id
-	parent_id := c.Query("parent_identity")
+	parent_identity := c.Query("parent_identity")
 	//文件的唯一id
 	identity := c.Query("identity")
 
-	if parent_id == "" || identity == "" {
+	if parent_identity == "" || identity == "" {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code": 1,
 			"msg":  "必填参数不能为空!",
@@ -327,7 +332,7 @@ func MoveFile(c *gin.Context) {
 	}
 	//查询目的文件夹是否存在
 	userIdentity := c.MustGet("UserIdentity").(string)
-	f, user := models.GetByIdentityUserIdentity(parent_id, userIdentity)
+	f, user := models.GetByIdentityUserIdentity(parent_identity, userIdentity)
 	if !f {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code": 1,
@@ -335,10 +340,31 @@ func MoveFile(c *gin.Context) {
 		})
 		return
 	}
+	ok, _ := models.GetByIdentityUserIdentity(identity, userIdentity)
+	if !ok {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "文件不存在!",
+		})
+		return
+	}
+
 	models.UpdateFileParentId(identity, user.Id)
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  "文件移动成功!",
 	})
 
+}
+
+func FolderList(c *gin.Context) {
+	userIdentity := c.MustGet("UserIdentity").(string)
+	data := models.GetByUseIdentityRepositoryIdentityList(userIdentity, "")
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "获取文件夹列表成功!",
+		"data": gin.H{
+			"folder_list": data,
+		},
+	})
 }

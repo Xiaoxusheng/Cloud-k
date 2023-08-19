@@ -79,5 +79,4 @@ func GetShareBasicDetail(identity string) (bool, *uility.ShareBasicFileDetail) {
 		})
 	}
 	return has, ShareBasicFileDetail
-
 }

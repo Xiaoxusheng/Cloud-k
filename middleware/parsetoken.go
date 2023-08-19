@@ -20,7 +20,15 @@ func ParseToken() gin.HandlerFunc {
 			ErrorMessage.ErrorDescription = "token不能为空"
 			panic(ErrorMessage)
 		}
+		//fmt.Println(strings.Contains(tokens, "Bearer"))
+		if !strings.Contains(tokens, "Bearer") {
+			c.Abort()
+			ErrorMessage.ErrorDescription = "token格式不对!"
+			panic(ErrorMessage)
+			return
+		}
 		tokenString := strings.Split(tokens, "Bearer ")
+		fmt.Println(tokenString)
 		user := uility.MyCustomClaims{}
 		token, err := jwt.ParseWithClaims(tokenString[len(tokenString)-1], &user, func(token *jwt.Token) (interface{}, error) {
 			return uility.MySigningKey, nil
@@ -62,8 +70,7 @@ func ParseToken() gin.HandlerFunc {
 		//fmt.Println("username", user.Identification)
 		//result, err := db.Rdb.Get(ctx, user.Identification).Result()
 		//if err != nil {
-		//	c.Abort()
-		//	panic("token失效或过期！")
+
 		//}
 		//fmt.Println(result)
 		//if result != tokenString[len(tokenString)-1] {

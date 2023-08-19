@@ -38,6 +38,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.0.9 // indirect
 	github.com/syndtr/goleveldb v1.0.0 // indirect
 	github.com/tencentyun/cos-go-sdk-v5 v0.7.42 // indirect
+	github.com/tsliwowicz/go-wrk v0.0.0-20230622111234-ae30aa2b4b86 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	golang.org/x/arch v0.4.0 // indirect

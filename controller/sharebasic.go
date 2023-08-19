@@ -82,5 +82,55 @@ func ShareBasicDetail(c *gin.Context) {
 }
 
 func ShareBasicSave(c *gin.Context) {
+	parent_id := c.Query("parent_id")
+	repository_identity := c.Query("repository_identity")
+	if parent_id == "" || repository_identity == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "必填参数不能为空!",
+		})
+		return
+	}
+	userIdentity := c.MustGet("UserIdentity").(string)
+
+	//先查是否已经有这个资源
+	if m := models.GetByUseIdentityRepositoryIdentity(userIdentity, repository_identity); m {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "资源已经保存!",
+		})
+		return
+	}
+
+	ok, data := models.GetByRepositoryPool(repository_identity)
+	if !ok {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "资源不存在!",
+		})
+		return
+	}
+	Parent_id, err := strconv.Atoi(parent_id)
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorType:        uility.Error,
+			ErrorTime:        time.Now(),
+			ErrorDescription: err.Error(),
+		})
+	}
+
+	//	保存资源
+	models.InsertUserRepository(&uility.UserRepositorySave{
+		UserIdentity:        userIdentity,
+		Parent_id:           Parent_id,
+		Repository_identity: data.Identity,
+		Ext:                 data.Ext,
+		Name:                data.Name,
+		Size:                int(data.Size),
+	})
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "保存成功!",
+	})
 
 }

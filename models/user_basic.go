@@ -14,9 +14,9 @@ type User_basic struct {
 	Username  string    ` json:"username,omitempty" form:"username"  binding:"required,min=3,max=10" form:"username" `
 	Password  string    ` json:"password,omitempty" form:"password" binding:"required,min=5,max=10"  form:"password" `
 	Email     string    ` json:"email,omitempty" binding:"required email"`
-	CreatedAt time.Time `xorm:"created " json:"createdAt,omitempty"`
-	UpdatedAt time.Time `xorm:"updated  " json:"updatedAat,omitempty" `
-	DeleteAt  time.Time `xorm:"deleted  " json:"deleteAtt,omitempty"`
+	CreatedAt time.Time `xorm:"created " json:"created_at,omitempty"`
+	UpdatedAt time.Time `xorm:"updated  " json:"updated_att,omitempty" `
+	DeleteAt  time.Time `xorm:"deleted  " json:"delete_at,omitempty"`
 }
 
 func GetUser(username, password string) (*User_basic, error) {
