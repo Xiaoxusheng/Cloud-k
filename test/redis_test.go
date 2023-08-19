@@ -1,18 +1,14 @@
-package db
+package test
 
 import (
 	"context"
+	"fmt"
 	"github.com/redis/go-redis/v9"
 	"log"
+	"testing"
 )
 
-/*
-redis服务器
-*/
-
-var Rdb *redis.Client
-
-func init() {
+func TestRedis(t *testing.T) {
 	client := redis.NewClient(&redis.Options{
 		Addr:     "192.168.0.107:6379",
 		Password: "admin123", // no password set
@@ -21,8 +17,8 @@ func init() {
 	})
 	ctx := context.Background()
 	ping := client.Ping(ctx)
+	fmt.Println(ping.String())
 	if ping.String() == "ping: PONG" {
 		log.Println("连接redis 成功!")
 	}
-	Rdb = client
 }

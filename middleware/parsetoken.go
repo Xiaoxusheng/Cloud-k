@@ -1,11 +1,14 @@
 package middleware
 
 import (
+	"Cloud-k/db"
 	"Cloud-k/uility"
+	"context"
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
+	"net/http"
 	"strings"
 )
 
@@ -68,19 +71,22 @@ func ParseToken() gin.HandlerFunc {
 
 		c.Set("UserIdentity", user.Identity)
 		//fmt.Println("username", user.Identification)
-		//result, err := db.Rdb.Get(ctx, user.Identification).Result()
-		//if err != nil {
-
-		//}
-		//fmt.Println(result)
-		//if result != tokenString[len(tokenString)-1] {
-		//	c.JSON(http.StatusOK, gin.H{
-		//		"code": 1,
-		//		"msg":  "账号在其他地方登录，只允许一台设备登录！",
-		//	})
-		//	c.Abort()
-		//	return
-		//}
+		ctx := context.Background()
+		t, err := db.Rdb.HGet(ctx, user.Identity, "token").Result()
+		rt, err := db.Rdb.HGet(ctx, user.Identity, "refresh_token").Result()
+		if err != nil {
+			ErrorMessage.ErrorDescription = "redis获取失败!"
+			panic(ErrorMessage)
+		}
+		fmt.Println(t, rt)
+		if t != tokenString[len(tokenString)-1] || rt != tokenString[len(tokenString)-1] {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 1,
+				"msg":  "账号在其他地方登录，只允许一台设备登录！",
+			})
+			c.Abort()
+			return
+		}
 		c.Next()
 	}
 }

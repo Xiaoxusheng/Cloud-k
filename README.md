@@ -15,7 +15,9 @@
 开放80端口
 firewall-cmd --zone=public --add-port=80/tcp --permanent
 重启防火墙
-systemctl restart firewalld.service
+
+查看以开放端口
+sudo firewall-cmd --list-ports
 
 ```
 

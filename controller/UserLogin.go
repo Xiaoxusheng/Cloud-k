@@ -1,11 +1,14 @@
 package controller
 
 import (
+	"Cloud-k/db"
 	"Cloud-k/models"
 	"Cloud-k/uility"
+	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"time"
 )
 
 // 登录
@@ -30,14 +33,27 @@ func Login(c *gin.Context) {
 		})
 		return
 	}
+	m := 2
+	n := 24
+	token := uility.GetToken(user.Identity, m)
+	refresh_token := uility.GetToken(user.Identity, n)
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  "登录成功！",
 		"data": gin.H{
-			"token":         uility.GetToken(user.Identity, 2),
-			"refresh_token": uility.GetToken(user.Identity, 24),
+			"token":         token,
+			"refresh_token": refresh_token,
 		},
 	})
+	//设置用户唯一identity
+	ctx := context.Background()
+	_, err = db.Rdb.HSet(ctx, user.Identity, "token", token, "refresh_token", refresh_token).Result()
+	db.Rdb.Expire(ctx, user.Identity, time.Hour*24)
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorDescription: "redis获取失败",
+		})
+	}
 }
 
 // 用户注册
