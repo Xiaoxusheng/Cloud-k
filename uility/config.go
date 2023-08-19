@@ -1,29 +1,59 @@
 package uility
 
-import "time"
+import (
+	"time"
+)
 
-var MySigningKey = "welcome to use Cloud-k Auth:Mr.Lei time:2023/8/9 15.38"
+var MySigningKey = []byte("welcome to use Cloud-kAuth:Mr.Lei")
+
+var SECRETID = ""
+var SECRETKEY = ""
+
+var Count = 0
 
 type ErrorMessage struct {
-	ErrorType        string    `json:"errorType"`        //错误类型
-	ErrorDescription string    `json:"errorDescription"` //细节描述
-	ErrorDetails     string    `json:"errorDetails"`     // 错误详情
-	ErrorTime        time.Time `json:"errorTime"`        //时间
+	ErrorType        string    `json:"errorType,omitempty"`        //错误类型
+	ErrorDescription string    `json:"errorDescription,omitempty"` //细节描述
+	ErrorDetails     string    `json:"errorDetails,omitempty"`     // 错误详情
+	ErrorTime        time.Time `json:"errorTime,omitempty"`        //时间
 }
 
 // 错误级别
 const (
-	Info      = 100
-	Warning   = 300
-	Error     = 400
-	Critical  = 500
-	Emergency = 999
+	Info      = "100"
+	Warning   = "300"
+	Error     = "400"
+	Critical  = "500"
+	Emergency = "999"
 )
 
-var ErrorCodeToLevel = map[int]string{
-	100: "Info",
-	300: "Warning",
-	400: "Error",
-	500: "Critical",
-	999: "Emergency",
+type UserRepositorySave struct {
+	UserIdentity        string `json:"uer_identity,omitempty"  form:"user_identity"`
+	Identity            string `json:"identity,omitempty" form:"identity"`
+	Parent_id           int    `json:"parent_id" binding:"-" form:"parent_id"`
+	Repository_identity string `json:"repository_identity" binding:"required" form:"repository_identity"`
+	Ext                 string `json:"ext" binding:"required" form:"ext"`
+	Name                string `json:"name" binding:"required" form:"name"`
+	Size                int    `json:"size" form:"size"`
+}
+
+type UserRepositoryFileList struct {
+	Id                  int    `json:"id"`
+	Hash                string `json:"hash"` //内容唯一hash
+	Path                string `json:"path"`
+	UserIdentity        string `json:"uer_identity,omitempty"  form:"user_identity"`
+	Identity            string `json:"identity,omitempty" form:"identity"`
+	Parent_id           int    `json:"parent_id" binding:"-" form:"parent_id"`
+	Repository_identity string `json:"repository_identity" binding:"required" form:"repository_identity"`
+	Ext                 string `json:"ext" binding:"required" form:"ext"`
+	Name                string `json:"name" binding:"required" form:"name"`
+	Size                int    `json:"size" form:"size"`
+}
+
+type ShareBasicFileDetail struct {
+	Name               string `json:"name,"`
+	Size               int    `json:"size "`
+	Path               string `json:"path"`
+	Ext                string `json:"ext"`
+	RepositoryIdentity string `json:"repository_identity"`
 }
