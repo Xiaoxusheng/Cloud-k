@@ -368,3 +368,61 @@ func FolderList(c *gin.Context) {
 		},
 	})
 }
+
+// 下载文件，目前仅支持单线程下载
+func DownloadFile(c *gin.Context) {
+	identity := c.Query("identity")
+	if identity == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "必填参数不能为空!",
+		})
+		return
+	}
+	u, _ := url.Parse("https://cloud-k-1308109276.cos.ap-nanjing.myqcloud.com")
+	b := &cos.BaseURL{BucketURL: u}
+	client := cos.NewClient(b, &http.Client{
+		Transport: &cos.AuthorizationTransport{
+			SecretID:  uility.SECRETID,  // 用户的 SecretId，建议使用子账号密钥，授权遵循最小权限指引，降低使用风险。子账号密钥获取可参考 https://cloud.tencent.com/document/product/598/37140
+			SecretKey: uility.SECRETKEY, // 用户的 SecretKey，建议使用子账号密钥，授权遵循最小权限指引，降低使用风险。子账号密钥获取可参考 https://cloud.tencent.com/document/product/598/37140
+		},
+	})
+	//判断是否存在
+	ok, file := models.GetByRepositoryPool(identity)
+	if !ok {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "文件不存在!",
+		})
+		return
+	}
+	// 1.通过响应体获取对象
+	name := "cloud-k/" + file.Name + file.Ext
+	resp, err := client.Object.Get(context.Background(), name, nil)
+	if err != nil {
+		fmt.Println(err)
+
+	}
+	g, _ := io.ReadAll(resp.Body)
+	defer resp.Body.Close()
+	_, err = c.Writer.Write(g)
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorType:    uility.Error,
+			ErrorDetails: "写入出错" + err.Error(),
+			ErrorTime:    time.Now(),
+		})
+	}
+	c.Writer.WriteHeader(http.StatusOK)
+	c.Writer.WriteHeaderNow()
+
+	//
+
+	//fmt.Printf("%s\n", string(bs))
+	//// 2.获取对象到本地文件
+	//_, err = client.Object.GetToFile(context.Background(), name, "file"+file.Name+file.Ext, nil)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+
+}

@@ -1,13 +1,14 @@
 package uility
 
 import (
+	"fmt"
 	"time"
 )
 
 var MySigningKey = []byte("welcome to use Cloud-kAuth:Mr.Lei")
 
-var SECRETID = ""
-var SECRETKEY = ""
+var SECRETID = "AKIDfBRQAdpkPnukJceOr52JK4XjeIgmb9RS"
+var SECRETKEY = "lFRTFkzziAMIyNULvEG0VkofGahZBWaN"
 
 var Count = 0
 
@@ -56,4 +57,11 @@ type ShareBasicFileDetail struct {
 	Path               string `json:"path"`
 	Ext                string `json:"ext"`
 	RepositoryIdentity string `json:"repository_identity"`
+}
+
+func i() {
+	var k *int
+	fmt.Println(k)
+	m := 9
+	k = &m
 }
