@@ -23,6 +23,7 @@ import (
 var msgChan = make(chan int, 10)
 var finShellChan = make(chan bool, 100)
 
+// 上传文件
 func UploadFile(c *gin.Context) {
 	t := time.Now()
 	form, err := c.MultipartForm()
@@ -148,6 +149,7 @@ func Upload(file *multipart.FileHeader, i *int64) {
 	log.Println("完成")
 }
 
+// 同步
 func RepositorySave(c *gin.Context) {
 	UserRepositorySave := new(uility.UserRepositorySave)
 	err := c.ShouldBindJSON(&UserRepositorySave)
@@ -175,6 +177,7 @@ func RepositorySave(c *gin.Context) {
 	})
 }
 
+// 文件列表
 func FileList(c *gin.Context) {
 	//页数
 	page := c.DefaultQuery("page", "1")
@@ -218,6 +221,7 @@ func FileList(c *gin.Context) {
 
 }
 
+// 更新文件名称
 func UpdateFileName(c *gin.Context) {
 	//
 	identity := c.Query("identity")
@@ -258,6 +262,7 @@ func UpdateFileName(c *gin.Context) {
 
 }
 
+// 创造文件夹
 func CreateFolder(c *gin.Context) {
 	parent_id := c.Query("parent_id")
 	name := c.Query("name")
@@ -292,6 +297,7 @@ func CreateFolder(c *gin.Context) {
 	})
 }
 
+// 删除文件
 func DeleteFile(c *gin.Context) {
 	identity := c.Query("identity")
 	if identity == "" {
@@ -319,6 +325,7 @@ func DeleteFile(c *gin.Context) {
 	})
 }
 
+// 移动文件
 func MoveFile(c *gin.Context) {
 	//目的文件夹的唯一id
 	parent_identity := c.Query("parent_identity")
@@ -359,6 +366,7 @@ func MoveFile(c *gin.Context) {
 
 }
 
+// 文件夹列表
 func FolderList(c *gin.Context) {
 	userIdentity := c.MustGet("UserIdentity").(string)
 	data := models.GetByUseIdentityRepositoryIdentityList(userIdentity, "")
