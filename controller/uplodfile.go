@@ -219,9 +219,11 @@ func FileList(c *gin.Context) {
 }
 
 func UpdateFileName(c *gin.Context) {
+	//
 	identity := c.Query("identity")
+	repository_identity := c.Query("repository_identity")
 	name := c.Query("name")
-	if identity == "" || name == "" {
+	if identity == "" || name == "" || repository_identity == "" {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code": 1,
 			"msg":  "必填参数不能为空!",
@@ -229,7 +231,7 @@ func UpdateFileName(c *gin.Context) {
 		return
 	}
 	userIdentity := c.MustGet("UserIdentity").(string)
-	k := models.GetByIdentity(identity, userIdentity)
+	k := models.GetByIdentity(identity, userIdentity, repository_identity)
 	if !k {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code": 1,
@@ -405,6 +407,7 @@ func DownloadFile(c *gin.Context) {
 	}
 	g, _ := io.ReadAll(resp.Body)
 	defer resp.Body.Close()
+	//写入响应体
 	_, err = c.Writer.Write(g)
 	if err != nil {
 		panic(uility.ErrorMessage{
@@ -413,16 +416,6 @@ func DownloadFile(c *gin.Context) {
 			ErrorTime:    time.Now(),
 		})
 	}
+	//设置响应头状态码
 	c.Writer.WriteHeader(http.StatusOK)
-	c.Writer.WriteHeaderNow()
-
-	//
-
-	//fmt.Printf("%s\n", string(bs))
-	//// 2.获取对象到本地文件
-	//_, err = client.Object.GetToFile(context.Background(), name, "file"+file.Name+file.Ext, nil)
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
-
 }

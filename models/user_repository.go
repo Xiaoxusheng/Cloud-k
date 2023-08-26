@@ -85,9 +85,9 @@ func GetByName(name string) bool {
 	return has
 }
 
-func GetByIdentity(identity, userIdentity string) bool {
+func GetByIdentity(identity, userIdentity, repositoryIdentity string) bool {
 	user_repository := new(User_repository)
-	has, err := db.Engine.Where("identity=? and parent_id=(select parent_id from user_repository where user_identity=?)", identity, userIdentity).Get(user_repository)
+	has, err := db.Engine.Where("identity=? and parent_id=(select parent_id from user_repository where user_identity=? and repository_identity=?)", identity, userIdentity, repositoryIdentity).Get(user_repository)
 	if err != nil {
 		panic(uility.ErrorMessage{
 			ErrorType:        uility.Error,
