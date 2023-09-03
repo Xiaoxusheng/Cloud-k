@@ -48,7 +48,7 @@ func SendEmail(emails, code string) {
 	//文本
 	e.Text = []byte("[小学生]您的登录验证码为：" + code)
 
-	err := e.SendWithStartTLS("smtp.qq.com:587", smtp.PlainAuth("", "2673893724@qq.com", "myucgbfyfcnodjch", "smtp.qq.com"), &tls.Config{InsecureSkipVerify: true, ServerName: "smtp.gmail.com:465"})
+	err := e.SendWithStartTLS("smtp.qq.com:587", smtp.PlainAuth("", "邮箱", "授权码", "smtp.qq.com"), &tls.Config{InsecureSkipVerify: true, ServerName: "smtp.gmail.com:465"})
 	if err != nil {
 		log.Println("stmp:", err)
 
