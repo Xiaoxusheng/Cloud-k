@@ -29,7 +29,8 @@ func SendErrorEmail(code, ip string, errormessage ErrorMessage) {
 		"<p>服务器IP：" + ip + "</p>\n" +
 		"</div>\n<p class=\"footer\">此邮件为系统自动发送，请勿回复。</p>\n</div>\n</body>\n</html>")
 
-	err := e.SendWithStartTLS("smtp.qq.com:587", smtp.PlainAuth("", "2673893724@qq.com", "myucgbfyfcnodjch", "smtp.qq.com"), &tls.Config{InsecureSkipVerify: true, ServerName: "smtp.gmail.com:465"})
+	err := e.SendWithStartTLS("smtp.qq.com:587", smtp.PlainAuth("", "邮箱", "授权码", "smtp.qq.com"), &tls.Config{InsecureSkipVerify: true, ServerName: "smtp.gmail.com:465"})
+
 	if err != nil {
 		log.Println("stmp:", err)
 
