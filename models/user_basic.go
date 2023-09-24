@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-type User_basic struct {
+type UserBasic struct {
 	Id        int       `json:"id"  xorm:"unique"`
 	Identity  string    ` json:"identity,omitempty" binding:"required "`
 	Username  string    ` json:"username,omitempty" form:"username"  binding:"required,min=3,max=10" form:"username" `
@@ -19,8 +19,8 @@ type User_basic struct {
 	DeleteAt  time.Time `xorm:"deleted  " json:"delete_at,omitempty"`
 }
 
-func GetUser(username, password string) (*User_basic, error) {
-	user := new(User_basic)
+func GetUser(username, password string) (*UserBasic, error) {
+	user := new(UserBasic)
 	has, err := db.Engine.Where("username=? and password=?", username, password).Get(user)
 	log.Println(has, err, username, password)
 	if err != nil && !has {
@@ -36,7 +36,7 @@ func GetUser(username, password string) (*User_basic, error) {
 }
 
 func GetEmail(email string) bool {
-	user := new(User_basic)
+	user := new(UserBasic)
 	has, err := db.Engine.Where("email=?", email).Get(user)
 	log.Println("email", has)
 	if err != nil && !has {
@@ -53,7 +53,7 @@ func GetEmail(email string) bool {
 
 func GetByUser(username string) bool {
 	fmt.Println(username)
-	user := new(User_basic)
+	user := new(UserBasic)
 	has, err := db.Engine.Where("username = ?", username).Get(user)
 	if err != nil && !has {
 		panic(uility.ErrorMessage{
@@ -68,7 +68,7 @@ func GetByUser(username string) bool {
 }
 
 func InsertUser(username, password, identity, email string) {
-	_, err := db.Engine.Insert(&User_basic{
+	_, err := db.Engine.Insert(&UserBasic{
 		Username: username,
 		Identity: identity,
 		Password: password,
@@ -85,8 +85,8 @@ func InsertUser(username, password, identity, email string) {
 
 }
 
-func GetUserDetail(identity string) *User_basic {
-	user := new(User_basic)
+func GetUserDetail(identity string) *UserBasic {
+	user := new(UserBasic)
 	u, err := db.Engine.Where("identity=?", identity).Get(user)
 	if err != nil {
 		panic(uility.ErrorMessage{

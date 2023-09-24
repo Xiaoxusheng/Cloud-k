@@ -379,6 +379,43 @@ func FolderList(c *gin.Context) {
 	})
 }
 
+// 修改文件夹名称
+func UpdateFolder(c *gin.Context) {
+	userIdentity := c.MustGet("UserIdentity").(string)
+	name := c.Query("name")
+	identity := c.Query("identity")
+	if identity == "" || name == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "必填参数不能为空!",
+		})
+		return
+	}
+	//identity是否存在
+	//查询文件是否存在
+	f, file := models.GetByIdentityUserIdentity(identity, userIdentity)
+	if !f {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "文件不存在!",
+		})
+		return
+	}
+	if file.RepositoryIdentity == "" {
+		models.UpdateFlor(identity, name)
+		c.JSON(http.StatusOK, gin.H{
+			"code": 200,
+			"msg":  "修改成功！",
+		})
+	} else {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "不是文件夹！",
+		})
+	}
+
+}
+
 // 下载文件，目前仅支持单线程下载
 func DownloadFile(c *gin.Context) {
 	identity := c.Query("identity")

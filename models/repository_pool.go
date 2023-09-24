@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type Repository_pool struct {
+type RepositoryPool struct {
 	Id        int       `json:"id"`
 	Identity  string    `json:"identity"`
 	Hash      string    `json:"hash"` //内容唯一hash
@@ -20,7 +20,7 @@ type Repository_pool struct {
 }
 
 func GetByHash(hash string) (bool, error) {
-	repository_pool := new(Repository_pool)
+	repository_pool := new(RepositoryPool)
 	ext, err := db.Engine.Where("hash=?", hash).Get(repository_pool)
 	if err != nil {
 		return ext, err
@@ -31,7 +31,7 @@ func GetByHash(hash string) (bool, error) {
 
 func InsertFile(hash, name, ext, path string, size int64) {
 	_, err := db.Engine.Insert(
-		&Repository_pool{
+		&RepositoryPool{
 			Identity: uility.GetUuid(),
 			Hash:     hash,
 			Name:     name,
@@ -49,8 +49,8 @@ func InsertFile(hash, name, ext, path string, size int64) {
 	}
 }
 
-func GetByRepositoryPool(identity string) (bool, *Repository_pool) {
-	repository_pool := new(Repository_pool)
+func GetByRepositoryPool(identity string) (bool, *RepositoryPool) {
+	repository_pool := new(RepositoryPool)
 	has, err := db.Engine.Where("identity=?", identity).Get(repository_pool)
 	if err != nil {
 		panic(uility.ErrorMessage{

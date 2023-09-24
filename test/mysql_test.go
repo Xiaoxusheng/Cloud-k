@@ -16,7 +16,7 @@ func Test_mysql(t *testing.T) {
 	}
 	log.Println("连接成功")
 
-	err = Engine.Sync2(new(models.User_basic))
+	err = Engine.Sync2(new(models.UserBasic))
 	if err != nil {
 		panic(err)
 	}

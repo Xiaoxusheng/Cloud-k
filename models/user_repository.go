@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type User_repository struct {
+type UserRepository struct {
 	Id                 int       `json:"id"`
 	Identity           string    `json:"identity"`
 	UserIdentity       string    `json:"user_identity"`       //用户唯一标识
@@ -21,7 +21,7 @@ type User_repository struct {
 }
 
 func GetByUserRepository(user_identity, repository_Identity string) bool {
-	userRepository := new(User_repository)
+	userRepository := new(UserRepository)
 	has, err := db.Engine.Where("user_identity=? and repository_identity=?", user_identity, repository_Identity).Get(userRepository)
 	if err != nil {
 		panic(uility.ErrorMessage{
@@ -37,7 +37,7 @@ func GetByUserRepository(user_identity, repository_Identity string) bool {
 }
 
 func InsertUserRepository(user *uility.UserRepositorySave) {
-	_, err := db.Engine.Insert(&User_repository{
+	_, err := db.Engine.Insert(&UserRepository{
 		Identity:           uility.GetUuid(),
 		UserIdentity:       user.UserIdentity,
 		ParentId:           user.Parent_id,
@@ -72,7 +72,7 @@ func GetFileList(page, number int, user_identity, parent_id string) []uility.Use
 }
 
 func GetByName(name string) bool {
-	User_repository := new(User_repository)
+	User_repository := new(UserRepository)
 	has, err := db.Engine.Where("name=?", name).Get(User_repository)
 	if err != nil {
 		panic(uility.ErrorMessage{
@@ -86,7 +86,7 @@ func GetByName(name string) bool {
 }
 
 func GetByIdentity(identity, userIdentity, repositoryIdentity string) bool {
-	user_repository := new(User_repository)
+	user_repository := new(UserRepository)
 	has, err := db.Engine.Where("identity=? and parent_id=(select parent_id from user_repository where user_identity=? and repository_identity=?)", identity, userIdentity, repositoryIdentity).Get(user_repository)
 	if err != nil {
 		panic(uility.ErrorMessage{
@@ -100,7 +100,7 @@ func GetByIdentity(identity, userIdentity, repositoryIdentity string) bool {
 }
 
 func UpDateFileName(name, identity, userIdentity string) {
-	_, err := db.Engine.Where("user_identity=? and identity=?", userIdentity, identity).Update(&User_repository{Name: name})
+	_, err := db.Engine.Where("user_identity=? and identity=?", userIdentity, identity).Update(&UserRepository{Name: name})
 	if err != nil {
 		panic(uility.ErrorMessage{
 			ErrorType:        uility.Error,
@@ -112,7 +112,7 @@ func UpDateFileName(name, identity, userIdentity string) {
 }
 
 func GetByNameParentId(name, parent_id string) bool {
-	user_repository := new(User_repository)
+	user_repository := new(UserRepository)
 	has, err := db.Engine.Where("name=? and parent_id=?", name, parent_id).Get(user_repository)
 	if err != nil {
 		panic(uility.ErrorMessage{
@@ -126,7 +126,7 @@ func GetByNameParentId(name, parent_id string) bool {
 }
 
 func InsertFolder(user_identity, name string, parent_id int) {
-	_, err := db.Engine.Insert(&User_repository{
+	_, err := db.Engine.Insert(&UserRepository{
 		Identity:     uility.GetUuid(),
 		UserIdentity: user_identity,
 		ParentId:     parent_id,
@@ -144,7 +144,7 @@ func InsertFolder(user_identity, name string, parent_id int) {
 }
 
 func DeleteFile(identity, user_identity string) {
-	user_repository := new(User_repository)
+	user_repository := new(UserRepository)
 	_, err := db.Engine.Where("identity=? and user_identity=? ", identity, user_identity).Delete(user_repository)
 	if err != nil {
 		panic(uility.ErrorMessage{
@@ -156,8 +156,8 @@ func DeleteFile(identity, user_identity string) {
 	}
 }
 
-func GetByIdentityUserIdentity(identity, user_identity string) (bool, *User_repository) {
-	user_repository := new(User_repository)
+func GetByIdentityUserIdentity(identity, user_identity string) (bool, *UserRepository) {
+	user_repository := new(UserRepository)
 	has, err := db.Engine.Where("identity=? and user_identity=? ", identity, user_identity).Get(user_repository)
 	if err != nil {
 		panic(uility.ErrorMessage{
@@ -171,7 +171,7 @@ func GetByIdentityUserIdentity(identity, user_identity string) (bool, *User_repo
 }
 
 func UpdateFileParentId(identity string, id int) {
-	user_repository := new(User_repository)
+	user_repository := new(UserRepository)
 	user_repository.ParentId = id
 	_, err := db.Engine.Where("identity=?", identity).Update(user_repository)
 	if err != nil {
@@ -185,7 +185,7 @@ func UpdateFileParentId(identity string, id int) {
 }
 
 func GetByUseIdentityRepositoryIdentity(user_identity, repository_identity string) bool {
-	user_repository := new(User_repository)
+	user_repository := new(UserRepository)
 	has, err := db.Engine.Where("user_identity=? and repository_identity=? ", user_identity, repository_identity).Get(user_repository)
 	if err != nil {
 		panic(uility.ErrorMessage{
@@ -198,8 +198,8 @@ func GetByUseIdentityRepositoryIdentity(user_identity, repository_identity strin
 	return has
 }
 
-func GetByUseIdentityRepositoryIdentityList(user_identity, repository_identity string) []User_repository {
-	user_repository := make([]User_repository, 0)
+func GetByUseIdentityRepositoryIdentityList(user_identity, repository_identity string) []UserRepository {
+	user_repository := make([]UserRepository, 0)
 	err := db.Engine.Where("user_identity=? and repository_identity=? ", user_identity, repository_identity).Find(&user_repository)
 	if err != nil {
 		panic(uility.ErrorMessage{
@@ -210,4 +210,18 @@ func GetByUseIdentityRepositoryIdentityList(user_identity, repository_identity s
 		})
 	}
 	return user_repository
+}
+
+func UpdateFlor(identity, name string) {
+	_, err := db.Engine.Where("identity=?", identity).Update(&UserRepository{
+		Name: name,
+	})
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorType:        uility.Error,
+			ErrorDetails:     "UpdateFlor函数",
+			ErrorTime:        time.Now(),
+			ErrorDescription: "User_repository表更新" + err.Error(),
+		})
+	}
 }

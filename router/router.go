@@ -32,6 +32,7 @@ func Router() *gin.Engine {
 	file.DELETE("/fileDelete", controller.DeleteFile)
 	file.PUT("/fileMove", controller.MoveFile)
 	file.GET("/downloadFile", controller.DownloadFile)
+	file.GET("/updateFolder", controller.UpdateFolder)
 
 	//资源分享
 	ShareBasic := r.Group("/v1/files", middleware.ParseToken())

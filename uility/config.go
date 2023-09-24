@@ -7,8 +7,8 @@ import (
 
 var MySigningKey = []byte("welcome to use Cloud-kAuth:Mr.Lei")
 
-var SECRETID = ""
-var SECRETKEY = ""
+var SECRETID = "AKIDfBRQAdpkPnukJceOr52JK4XjeIgmb9RS"
+var SECRETKEY = "lFRTFkzziAMIyNULvEG0VkofGahZBWaN"
 
 var Count = 0
 
