@@ -448,7 +448,6 @@ func DownloadFile(c *gin.Context) {
 	resp, err := client.Object.Get(context.Background(), name, nil)
 	if err != nil {
 		fmt.Println(err)
-
 	}
 	g, _ := io.ReadAll(resp.Body)
 	defer resp.Body.Close()
@@ -463,4 +462,32 @@ func DownloadFile(c *gin.Context) {
 	}
 	//设置响应头状态码
 	c.Writer.WriteHeader(http.StatusOK)
+}
+
+// 分片上传
+func FragmentUpload(c *gin.Context) {
+	file, err := c.FormFile("file")
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorDescription: err.Error(),
+		})
+	}
+	f := uility.NewFile()
+	s := 1024 * 1024 * 50
+	err = f.Burst(file, int64(s))
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorDescription: err.Error(),
+		})
+	}
+	err = f.FragmentUpload(path.Ext(file.Filename))
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorDescription: err.Error(),
+		})
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "分片上传成功！",
+	})
 }

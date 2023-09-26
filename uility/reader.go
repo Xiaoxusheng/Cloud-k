@@ -17,7 +17,6 @@ func (r *Reader) Read(p []byte) (n int, err error) {
 		return 0, err
 	}
 	r.Current += int64(n)
-
 	fmt.Printf("\r进度 %.2f%%", float64(r.Current*10000/r.Total)/100)
 	return
 }
