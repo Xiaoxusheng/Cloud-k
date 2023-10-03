@@ -24,7 +24,7 @@ func Banned(c *gin.Context) {
 			ErrorDescription: "用户不存在!",
 		})
 	}
-	models.UpdateStatus(identity)
+	models.UpdateStatus(identity, 1)
 
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
@@ -32,7 +32,30 @@ func Banned(c *gin.Context) {
 	})
 }
 
-//解封用户
+// 解封用户
+func Unseal(c *gin.Context) {
+	identity := c.Query("identity")
+	if identity == "" {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "必填参数不能为空！",
+		})
+		return
+	}
+	//	判断是否存在
+	ok := models.GetUserById(identity)
+	if !ok {
+		panic(uility.ErrorMessage{
+			ErrorDescription: "用户不存在!",
+		})
+	}
+	models.UpdateStatus(identity, 0)
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "解封用户成功",
+	})
+}
 
 //分配容量
 

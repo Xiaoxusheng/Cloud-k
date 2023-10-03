@@ -67,9 +67,18 @@ func Router() *gin.Engine {
 
 	//超级管理员
 	root := r.Group("/v1/root", middleware.ParseToken(), middleware.Casbin())
+	//新增管理员
 	root.POST("/add", controller.AddPermission)
+	//修改管理权限
 	root.POST("/update", controller.UpdatePermission)
-
+	//新增资源
+	root.POST("/updateAssets", controller.UpdateAssets)
+	//获取资源列表
+	root.POST("/getAssetsList", controller.GetAssetsList)
+	//删除资源
+	root.POST("/deleteAssets", controller.DeleteAssets)
+	//新增资源
+	root.POST("/addAssets", controller.AddAssets)
 	return r
 
 }

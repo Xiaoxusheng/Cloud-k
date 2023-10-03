@@ -118,9 +118,9 @@ func GetUserById(id string) bool {
 	return ok
 }
 
-func UpdateStatus(id string) {
+func UpdateStatus(id string, status int) {
 	_, err := db.Engine.Where("identity=?", id).Update(&UserBasic{
-		Status: 1,
+		Status: status,
 	})
 	if err != nil {
 		panic(uility.ErrorMessage{
