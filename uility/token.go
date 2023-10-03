@@ -16,13 +16,15 @@ import (
 
 type MyCustomClaims struct {
 	Identity string
+	RuleId   string
 	jwt.RegisteredClaims
 }
 
-func GetToken(Identity string, i int) string {
+func GetToken(Identity, ruleId string, i int) string {
 	// Create claims with multiple fields populated
 	claims := MyCustomClaims{
 		Identity,
+		ruleId,
 		jwt.RegisteredClaims{
 			// A usual scenario is to set the expiration time relative to the current time
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(i) * time.Hour)),
@@ -81,6 +83,8 @@ func CreateLogFile() {
 			f, err := os.OpenFile("./log/"+time.Now().Format("2006-01-02")+".log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 			//f, err := os.Create("./log/" + time.Now().Format("2006-01-02") + ".log")
 			// 如果需要同时将日志写入文件和控制台，请使用以下代码。
+			gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
+			log.SetOutput(f)
 
 			if err == nil {
 				log.Println(time.Now().Format("2006-01-02") + "log文件创建成功！")

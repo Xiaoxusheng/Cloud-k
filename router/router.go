@@ -15,13 +15,13 @@ func Router() *gin.Engine {
 
 	//v 0.1 版本
 	//登录
-	r.POST("/v1/user/UserLogin", controller.Login)
+	r.POST("/v1/user/userLogin", controller.Login)
 	//注册
-	r.POST("/v1/user/UserRegister", controller.UserRegister)
+	r.POST("/v1/user/userRegister", controller.UserRegister)
 
 	user := r.Group("/v1/user", middleware.ParseToken())
 	//用户详情
-	user.GET("/UserDetail", controller.UserDetail)
+	user.GET("/userDetail", controller.UserDetail)
 	//退出登录
 	user.GET("/logout", controller.Logout)
 
@@ -47,18 +47,28 @@ func Router() *gin.Engine {
 	//修改文件夹名称
 	file.GET("/updateFolder", controller.UpdateFolder)
 	//分片上传
-	file.POST("./FragmentUpload", controller.FragmentUpload)
+	file.POST("/fragmentUpload", controller.FragmentUpload)
 
 	//资源分享
 	ShareBasic := r.Group("/v1/files", middleware.ParseToken())
 	//创建分享资源
-	ShareBasic.GET("/ShareBasicCreate", controller.ShareBasicCreate)
+	ShareBasic.GET("/shareBasicCreate", controller.ShareBasicCreate)
 	//资源详情
-	ShareBasic.GET("/ShareBasicDetail", controller.ShareBasicDetail)
+	ShareBasic.GET("/shareBasicDetail", controller.ShareBasicDetail)
 	//保存资源
-	ShareBasic.POST("/ShareBasicSave", controller.ShareBasicSave)
+	ShareBasic.POST("/shareBasicSave", controller.ShareBasicSave)
 	//刷新token
 	r.GET("/v1/refresh/authorization", middleware.ParseToken(), controller.RefreshToken)
+	//管理
+	Admin := r.Group("/v1/admin", middleware.ParseToken(), middleware.Casbin())
+
+	//管理员封禁用户
+	Admin.POST("/banned", controller.Banned)
+
+	//超级管理员
+	root := r.Group("/v1/root", middleware.ParseToken(), middleware.Casbin())
+	root.POST("/add", controller.AddPermission)
+	root.POST("/update", controller.UpdatePermission)
 
 	return r
 

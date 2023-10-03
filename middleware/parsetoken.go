@@ -70,6 +70,8 @@ func ParseToken() gin.HandlerFunc {
 		}
 
 		c.Set("UserIdentity", user.Identity)
+		c.Set("RuleId", user.RuleId)
+		fmt.Println(user.RuleId)
 		//fmt.Println("username", user.Identification)
 		ctx := context.Background()
 		exit, _ := db.Rdb.Exists(ctx, user.Identity).Result()

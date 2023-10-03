@@ -121,12 +121,12 @@ func ShareBasicSave(c *gin.Context) {
 
 	//	保存资源
 	models.InsertUserRepository(&uility.UserRepositorySave{
-		UserIdentity:        userIdentity,
-		Parent_id:           Parent_id,
-		Repository_identity: data.Identity,
-		Ext:                 data.Ext,
-		Name:                data.Name,
-		Size:                int(data.Size),
+		UserIdentity:       userIdentity,
+		ParentId:           Parent_id,
+		RepositoryIdentity: data.Identity,
+		Ext:                data.Ext,
+		Name:               data.Name,
+		Size:               int(data.Size),
 	})
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,

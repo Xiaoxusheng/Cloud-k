@@ -1,0 +1,8 @@
+p, user, /v1/files/*, (GET)|(POST)
+p, user, /v1/user/*, (GET)|(POST)
+
+
+p, administrator, /v1/admin/*, (GET)|(POST)
+
+p, root, /v1/root, (POST)
+p, root, /v1/admin/*, (POST)

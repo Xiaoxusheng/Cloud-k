@@ -13,8 +13,9 @@ import (
 // 刷新token后必须使用最新token请求，否则认为在其他地方登录
 func RefreshToken(c *gin.Context) {
 	userIdentity := c.MustGet("UserIdentity").(string)
-	token := uility.GetToken(userIdentity, 2)
-	refresh_token := uility.GetToken(userIdentity, 24)
+	RuleId := c.MustGet("RuleId").(string)
+	token := uility.GetToken(userIdentity, RuleId, 2)
+	refresh_token := uility.GetToken(userIdentity, RuleId, 24)
 	ctx := context.Background()
 	res, err := db.Rdb.HSet(ctx, userIdentity, "token", token, "refresh_token", refresh_token).Result()
 	fmt.Println(res)

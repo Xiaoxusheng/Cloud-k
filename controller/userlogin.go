@@ -35,8 +35,8 @@ func Login(c *gin.Context) {
 	}
 	m := 2
 	n := 24
-	token := uility.GetToken(user.Identity, m)
-	refresh_token := uility.GetToken(user.Identity, n)
+	token := uility.GetToken(user.Identity, user.CasbinIdentity, m)
+	refresh_token := uility.GetToken(user.Identity, user.CasbinIdentity, n)
 	//设置用户唯一identity
 	ctx := context.Background()
 	res, err := db.Rdb.HSet(ctx, user.Identity, "token", token, "refresh_token", refresh_token).Result()

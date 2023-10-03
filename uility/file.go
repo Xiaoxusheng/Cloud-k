@@ -33,7 +33,6 @@ func NewFile() *File {
 
 // 本地分片操作
 func (f *File) Burst(file *multipart.FileHeader, size int64) error {
-
 	num := file.Size/size + 1
 	f.list = make([]string, num)
 	open, err := file.Open()
@@ -138,3 +137,6 @@ func (f *File) upload(client *cos.Client, key string, UploadID string, index int
 	)
 	f.msg <- true
 }
+
+//admin@cloudreve.org
+//to95tQEE

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Cloud-k.iml" filepath="$PROJECT_DIR$/.idea/Cloud-k.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../cloud-k-vue/.idea/cloud-k-vue.iml" filepath="$PROJECT_DIR$/../cloud-k-vue/.idea/cloud-k-vue.iml" />
     </modules>
   </component>
 </project>

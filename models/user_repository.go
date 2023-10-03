@@ -40,8 +40,8 @@ func InsertUserRepository(user *uility.UserRepositorySave) {
 	_, err := db.Engine.Insert(&UserRepository{
 		Identity:           uility.GetUuid(),
 		UserIdentity:       user.UserIdentity,
-		ParentId:           user.Parent_id,
-		RepositoryIdentity: user.Repository_identity,
+		ParentId:           user.ParentId,
+		RepositoryIdentity: user.RepositoryIdentity,
 		Ext:                user.Ext,
 		Name:               user.Name,
 	})

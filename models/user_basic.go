@@ -10,6 +10,7 @@ import (
 
 type UserBasic struct {
 	Id        int       `json:"id"  xorm:"unique"`
+	Status    int       `json:"status,omitempty"`
 	Identity  string    ` json:"identity,omitempty" binding:"required "`
 	Username  string    ` json:"username,omitempty" form:"username"  binding:"required,min=3,max=10" form:"username" `
 	Password  string    ` json:"password,omitempty" form:"password" binding:"required,min=5,max=10"  form:"password" `
@@ -19,9 +20,9 @@ type UserBasic struct {
 	DeleteAt  time.Time `xorm:"deleted  " json:"delete_at,omitempty"`
 }
 
-func GetUser(username, password string) (*UserBasic, error) {
-	user := new(UserBasic)
-	has, err := db.Engine.Where("username=? and password=?", username, password).Get(user)
+func GetUser(username, password string) (*uility.Userinfo, error) {
+	user := new(uility.Userinfo)
+	has, err := db.Engine.Table("user_basic").Join("left", "casbin_basic ", "user_basic.identity=casbin_basic.user_identity").Where("username=? and password=?", username, password).Get(user)
 	log.Println(has, err, username, password)
 	if err != nil && !has {
 		panic(uility.ErrorMessage{
@@ -101,4 +102,32 @@ func GetUserDetail(identity string) *UserBasic {
 	}
 	return nil
 
+}
+
+func GetUserById(id string) bool {
+	user := new(UserBasic)
+	ok, err := db.Engine.Where("identity=?", id).Get(user)
+	if err != nil {
+		panic(uility.ErrorMessage{
+			uility.Error,
+			"user_basic表查询出错" + err.Error(),
+			"GetUserById函数",
+			time.Now(),
+		})
+	}
+	return ok
+}
+
+func UpdateStatus(id string) {
+	_, err := db.Engine.Where("identity=?", id).Update(&UserBasic{
+		Status: 1,
+	})
+	if err != nil {
+		panic(uility.ErrorMessage{
+			uility.Error,
+			"user_basic表查询出错" + err.Error(),
+			"UpdateStatus函数",
+			time.Now(),
+		})
+	}
 }

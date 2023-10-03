@@ -161,7 +161,7 @@ func RepositorySave(c *gin.Context) {
 	}
 	UserIdentity := c.MustGet("UserIdentity").(string)
 	//查询
-	f := models.GetByUserRepository(UserIdentity, UserRepositorySave.Repository_identity)
+	f := models.GetByUserRepository(UserIdentity, UserRepositorySave.RepositoryIdentity)
 	if f {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code": 1,
@@ -325,7 +325,7 @@ func DeleteFile(c *gin.Context) {
 	})
 }
 
-// 移动文件
+// MoveFile 移动文件
 func MoveFile(c *gin.Context) {
 	//目的文件夹的唯一id
 	parent_identity := c.Query("parent_identity")
