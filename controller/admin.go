@@ -57,12 +57,52 @@ func Unseal(c *gin.Context) {
 	})
 }
 
-//分配容量
+// 分配容量
+func DivideCapacity(c *gin.Context) {
+	//    查询所有用户
+	userList := models.GetUserList()
+	//	分配
+	list := make([]*models.CapacityBasic, 0)
+	for i := 0; i < len(userList); i++ {
+		list = append(list, &models.CapacityBasic{
+			TotalCapacity:    1,
+			ResidualCapacity: 1,
+			Recharge:         false,
+			Identity:         uility.GetUuid(),
+			UserIdentity:     userList[i].Identity,
+		})
+	}
+	models.InsertCapacityBasic(list)
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "分配完成！",
+	})
+}
 
-//查看剩余容量
+// 管理员所有查看剩余容量
+func GetResidualCapacity(c *gin.Context) {
+	list := models.GetResidualCapacityList()
+	c.JSON(http.StatusOK, gin.H{
+		"cdoe": 200,
+		"msg":  "获取成功！",
+		"data": gin.H{
+			"list": list,
+		},
+	})
+}
 
 //查看用户数据
 
 //查看用户访问信息
 
-//系统操作日志查看
+// GetLogList 系统操作日志查看
+func GetLogList(c *gin.Context) {
+	list := models.GetLogBasicList()
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "获取访问日志列表成功！",
+		"data": gin.H{
+			"log_list": list,
+		},
+	})
+}

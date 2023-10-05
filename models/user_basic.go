@@ -131,3 +131,18 @@ func UpdateStatus(id string, status int) {
 		})
 	}
 }
+
+func GetUserList() []UserBasic {
+	userlist := make([]UserBasic, 0)
+	err := db.Engine.Find(&userlist)
+	if err != nil {
+		panic(uility.ErrorMessage{
+			uility.Error,
+			"user_basic表查询出错" + err.Error(),
+			"GetUserList函数",
+			time.Now(),
+		})
+	}
+	return userlist
+
+}

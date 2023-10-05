@@ -15,6 +15,7 @@ import (
 func Login(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
+	fmt.Println(c.RemoteIP())
 
 	if username == "" || password == "" {
 		c.JSON(http.StatusOK, gin.H{

@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"Cloud-k/models"
 	"Cloud-k/uility"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -11,6 +12,23 @@ import (
 
 func Error() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		t1 := time.Now()
+		defer func() {
+			go func() {
+				role, ok := c.Get("RuleId")
+				if ok {
+					models.InsertLog(&models.LogBasic{
+						Identity:      uility.GetUuid(),
+						Methods:       c.Request.Method,
+						Path:          c.FullPath(),
+						StatusCode:    c.Writer.Status(),
+						RequestTime:   time.Now(),
+						TimeConsuming: time.Duration(time.Now().Sub(t1).Milliseconds()),
+						Role:          role.(string),
+					})
+				}
+			}()
+		}()
 		defer func() {
 			if err := recover(); err != nil {
 				fmt.Println("err", err)

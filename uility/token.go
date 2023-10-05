@@ -54,7 +54,6 @@ func GetToken(Identity, ruleId string, i int) string {
 	return ss
 }
 
-// uuid生成
 func GetUuid() string {
 	return uuid.NewV4().String()
 }

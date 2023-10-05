@@ -9,7 +9,6 @@ import (
 func Router() *gin.Engine {
 	r := gin.Default()
 	r.Use(middleware.Core())
-	r.Use(middleware.ParseTakeToken())
 	//r.Use(gin.Recovery())
 	r.Use(middleware.Error())
 
@@ -18,6 +17,7 @@ func Router() *gin.Engine {
 	r.POST("/v1/user/userLogin", controller.Login)
 	//注册
 	r.POST("/v1/user/userRegister", controller.UserRegister)
+	r.Use(middleware.Timeout())
 
 	user := r.Group("/v1/user", middleware.ParseToken())
 	//用户详情
@@ -60,13 +60,22 @@ func Router() *gin.Engine {
 	//刷新token
 	r.GET("/v1/refresh/authorization", middleware.ParseToken(), controller.RefreshToken)
 	//管理
+
 	Admin := r.Group("/v1/admin", middleware.ParseToken(), middleware.Casbin())
 
 	//管理员封禁用户
 	Admin.POST("/banned", controller.Banned)
+	//解封
+	Admin.POST("/unseal", controller.Unseal)
+	//查看日志
+	Admin.GET("/getLogList", controller.GetLogList)
+	//分配容量
+	Admin.GET("/divideCapacity", controller.DivideCapacity)
+	//管理员所有查看剩余容量
+	Admin.GET("/getResidualCapacity", controller.GetResidualCapacity)
 
 	//超级管理员
-	root := r.Group("/v1/root", middleware.ParseToken(), middleware.Casbin())
+	root := r.Group("/v1/root", middleware.Timeout(), middleware.ParseToken(), middleware.Casbin())
 	//新增管理员
 	root.POST("/add", controller.AddPermission)
 	//修改管理权限

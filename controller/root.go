@@ -115,7 +115,9 @@ func GetAssetsList(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  "获取成功！",
-		"data": list,
+		"data": gin.H{
+			"assets_list": list,
+		},
 	})
 }
 
@@ -154,6 +156,16 @@ func AddAssets(c *gin.Context) {
 		})
 		return
 	}
+	//判断新增资源是否已经存在
+	ok := uility.E.HasPolicy(uility.Admin, path, methods)
+	if ok {
+		panic(uility.ErrorMessage{
+			ErrorDescription: "资源已经存在!",
+		})
+
+	}
+	fmt.Println(ok)
+
 	ok, err := uility.E.AddPolicy(uility.Admin, path, methods)
 	if err != nil || !ok {
 		panic(uility.ErrorMessage{

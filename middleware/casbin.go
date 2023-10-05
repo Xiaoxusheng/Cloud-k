@@ -9,7 +9,6 @@ import (
 )
 
 func Casbin() gin.HandlerFunc {
-	ErrorMessage := uility.ErrorMessage{}
 	return func(c *gin.Context) {
 		e := uility.E
 		RuleId := c.MustGet("RuleId")
@@ -19,7 +18,7 @@ func Casbin() gin.HandlerFunc {
 		ok, err := e.Enforce(RuleId, obj, act)
 		if err != nil {
 			// 处理err
-			log.Println(e)
+			log.Println(err)
 			return
 		}
 		fmt.Println(ok)
@@ -27,11 +26,12 @@ func Casbin() gin.HandlerFunc {
 			// 拒绝请求，抛出异常
 			log.Println("不通过")
 			c.Abort()
-			ErrorMessage.ErrorDescription = "权限验证不通过"
-			panic(ErrorMessage)
+			panic(uility.ErrorMessage{
+				ErrorDescription: "权限验证不通过!",
+			})
 
 		}
-		log.Println("权限通过")
+		log.Println("权限验证通过")
 		c.Next()
 	}
 }
