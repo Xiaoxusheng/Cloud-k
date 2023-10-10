@@ -93,7 +93,17 @@ func GetResidualCapacity(c *gin.Context) {
 
 //查看用户数据
 
-//查看用户访问信息
+// 查看用户访问信息
+func GetUserLogs(c *gin.Context) {
+	list := models.GetUserLog()
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "获取数据成功！",
+		"data": gin.H{
+			"user_list": list,
+		},
+	})
+}
 
 // GetLogList 系统操作日志查看
 func GetLogList(c *gin.Context) {

@@ -40,6 +40,7 @@ func (t *TokenBucket) tokeToken() bool {
 	}
 	//	1判断令牌桶是否还有令牌
 	if t.current > 0 {
+		//原子操作，保证线程安全
 		atomic.AddInt64(&t.current, -1)
 		fmt.Println("当前令牌总数", t.current)
 		t.listTime = time.Now()

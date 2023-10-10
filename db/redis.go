@@ -14,7 +14,7 @@ var Rdb *redis.Client
 
 func init() {
 	client := redis.NewClient(&redis.Options{
-		Addr:     "192.168.0.103:6379",
+		Addr:     "127.0.0.1:6379",
 		Password: "admin123", // no password set
 		DB:       0,          // uses default DB
 		PoolSize: 1000,

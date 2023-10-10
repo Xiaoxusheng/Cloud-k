@@ -10,6 +10,7 @@ type LogBasic struct {
 	Id            int           `json:"id,omitempty"`
 	StatusCode    int           `json:"status_Code,omitempty"`
 	TimeConsuming time.Duration `json:"time_Consuming,omitempty"`
+	UserIdentity  string        `json:"userIdentity,omitempty"`
 	Identity      string        `json:"identity,omitempty"`
 	Methods       string        `json:"methods,omitempty"`
 	Path          string        `json:"path,omitempty"`
@@ -41,4 +42,17 @@ func InsertLog(l *LogBasic) {
 			ErrorDetails:     "InsertLog函数",
 		})
 	}
+}
+func GetUserLog() []LogBasic {
+	list := make([]LogBasic, 0)
+	err := db.Engine.Where("role=?", uility.User).Find(&list)
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorType:        uility.Error,
+			ErrorDescription: "CapacityBasic表查询出错" + err.Error(),
+			ErrorTime:        time.Now(),
+			ErrorDetails:     "GetUserLog函数",
+		})
+	}
+	return list
 }

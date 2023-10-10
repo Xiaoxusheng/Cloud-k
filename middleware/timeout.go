@@ -18,6 +18,7 @@ func Timeout() gin.HandlerFunc {
 				Identity:      uility.GetUuid(),
 				Methods:       c.Request.Method,
 				Path:          c.FullPath(),
+				UserIdentity:  c.MustGet("identity").(string),
 				StatusCode:    c.Writer.Status(),
 				RequestTime:   time.Now(),
 				TimeConsuming: time.Duration(time.Now().Sub(t1).Milliseconds()),

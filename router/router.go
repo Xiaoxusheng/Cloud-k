@@ -8,6 +8,7 @@ import (
 
 func Router() *gin.Engine {
 	r := gin.Default()
+
 	r.Use(middleware.Core())
 	//r.Use(gin.Recovery())
 	r.Use(middleware.Error())
@@ -19,7 +20,7 @@ func Router() *gin.Engine {
 	r.POST("/v1/user/userRegister", controller.UserRegister)
 	r.Use(middleware.Timeout())
 
-	user := r.Group("/v1/user", middleware.ParseToken())
+	user := r.Group("/v1/user", middleware.Timeout(), middleware.ParseToken())
 	//用户详情
 	user.GET("/userDetail", controller.UserDetail)
 	//退出登录
@@ -46,11 +47,15 @@ func Router() *gin.Engine {
 	file.GET("/downloadFile", controller.DownloadFile)
 	//修改文件夹名称
 	file.GET("/updateFolder", controller.UpdateFolder)
+	//分片上传初始化
+	file.POST("/uploadPart", controller.UploadPart)
 	//分片上传
 	file.POST("/fragmentUpload", controller.FragmentUpload)
+	//分片上传结束
+	file.POST("/uploadsCompletion", controller.UploadsCompletion)
 
 	//资源分享
-	ShareBasic := r.Group("/v1/files", middleware.ParseToken())
+	ShareBasic := r.Group("/v1/files", middleware.Timeout(), middleware.ParseToken())
 	//创建分享资源
 	ShareBasic.GET("/shareBasicCreate", controller.ShareBasicCreate)
 	//资源详情
@@ -61,7 +66,7 @@ func Router() *gin.Engine {
 	r.GET("/v1/refresh/authorization", middleware.ParseToken(), controller.RefreshToken)
 	//管理
 
-	Admin := r.Group("/v1/admin", middleware.ParseToken(), middleware.Casbin())
+	Admin := r.Group("/v1/admin", middleware.Timeout(), middleware.ParseToken(), middleware.Casbin())
 
 	//管理员封禁用户
 	Admin.POST("/banned", controller.Banned)
@@ -73,12 +78,14 @@ func Router() *gin.Engine {
 	Admin.GET("/divideCapacity", controller.DivideCapacity)
 	//管理员所有查看剩余容量
 	Admin.GET("/getResidualCapacity", controller.GetResidualCapacity)
+	// 查看用户访问信息
+	Admin.GET("/getUserLogs", controller.GetUserLogs)
 
 	//超级管理员
 	root := r.Group("/v1/root", middleware.Timeout(), middleware.ParseToken(), middleware.Casbin())
 	//新增管理员
 	root.POST("/add", controller.AddPermission)
-	//修改管理权限
+	//修改管理员的权限
 	root.POST("/update", controller.UpdatePermission)
 	//新增资源
 	root.POST("/updateAssets", controller.UpdateAssets)
@@ -89,5 +96,4 @@ func Router() *gin.Engine {
 	//新增资源
 	root.POST("/addAssets", controller.AddAssets)
 	return r
-
 }

@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path"
 	"strconv"
 	"sync/atomic"
 	"time"
@@ -29,6 +30,19 @@ func NewFile() *File {
 		msg: make(chan bool, 10),
 		n:   0,
 	}
+}
+
+func GetClient() *cos.Client {
+	//初始化
+	u, _ := url.Parse("https://cloud-k-1308109276.cos.ap-nanjing.myqcloud.com")
+	b := &cos.BaseURL{BucketURL: u}
+	client := cos.NewClient(b, &http.Client{
+		Transport: &cos.AuthorizationTransport{
+			SecretID:  SECRETID,  // 用户的 SecretId，建议使用子账号密钥，授权遵循最小权限指引，降低使用风险。子账号密钥获取可参考 https://cloud.tencent.com/document/product/598/37140
+			SecretKey: SECRETKEY, // 用户的 SecretKey，建议使用子账号密钥，授权遵循最小权限指引，降低使用风险。子账号密钥获取可参考 https://cloud.tencent.com/document/product/598/37140
+		},
+	})
+	return client
 }
 
 // 本地分片操作
@@ -74,10 +88,9 @@ func (f *File) FragmentUpload(fileExt string) error {
 			SecretKey: SECRETKEY, // 用户的 SecretKey，建议使用子账号密钥，授权遵循最小权限指引，降低使用风险。子账号密钥获取可参考 https://cloud.tencent.com/document/product/598/37140
 		},
 	})
-	id := GetUuid()
-	name := id
+	key := "cloud-k/" + GetUuid() + path.Ext(fileExt)
 	// 可选 opt,如果不是必要操作，建议上传文件时不要给单个文件设置权限，避免达到限制。若不设置默认继承桶的权限。
-	v, _, err := client.Object.InitiateMultipartUpload(context.Background(), name, nil)
+	v, _, err := client.Object.InitiateMultipartUpload(context.Background(), key, nil)
 	if err != nil {
 		return err
 	}
@@ -89,7 +102,6 @@ func (f *File) FragmentUpload(fileExt string) error {
 
 	// 注意，上传分块的块数最多10000块
 	//开始上传
-	key := "cloud-k/" + name + fileExt
 	for i := 0; i < len(f.list); i++ {
 		file, err := os.Open("./file/" + f.list[i])
 		if err != nil {
@@ -137,6 +149,3 @@ func (f *File) upload(client *cos.Client, key string, UploadID string, index int
 	)
 	f.msg <- true
 }
-
-//admin@cloudreve.org
-//to95tQEE

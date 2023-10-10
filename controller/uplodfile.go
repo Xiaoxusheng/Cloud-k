@@ -464,30 +464,150 @@ func DownloadFile(c *gin.Context) {
 	c.Writer.WriteHeader(http.StatusOK)
 }
 
+// 初始化分片传
+func UploadPart(c *gin.Context) {
+	filename := c.Query("filename")
+	if filename == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "必填参数不能为空!",
+		})
+		return
+	}
+	client := uility.GetClient()
+	if client == nil {
+		panic(uility.ErrorMessage{
+			ErrorType:        uility.Emergency,
+			ErrorDescription: "获取client失败",
+			ErrorTime:        time.Now(),
+		})
+	}
+	key := "cloud-k/" + uility.GetUuid() + path.Ext(filename)
+	// 可选 opt,如果不是必要操作，建议上传文件时不要给单个文件设置权限，避免达到限制。若不设置默认继承桶的权限。
+	v, _, err := client.Object.InitiateMultipartUpload(context.Background(), key, nil)
+	if err != nil {
+		panic(err)
+	}
+	UploadID := v.UploadID
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "分片上传初始化成功！",
+		"data": gin.H{
+			"UploadId": UploadID,
+		},
+	})
+
+	fmt.Println(UploadID)
+}
+
 // 分片上传
 func FragmentUpload(c *gin.Context) {
+	key := c.Query("key")
+	UploadID := c.Query("UploadID")
+	partNumber := c.Query("partNumber")
 	file, err := c.FormFile("file")
+
+	if key == "" || UploadID == "" || partNumber == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": 1,
+			"msg":  "必填参数不能为空!",
+		})
+		return
+	}
 	if err != nil {
 		panic(uility.ErrorMessage{
-			ErrorDescription: err.Error(),
+			ErrorType:        uility.Emergency,
+			ErrorDescription: "获取表单文件失败",
+			ErrorTime:        time.Now(),
 		})
 	}
-	f := uility.NewFile()
-	s := 1024 * 1024 * 50
-	err = f.Burst(file, int64(s))
+	PartNumbers, err := strconv.Atoi(partNumber)
 	if err != nil {
 		panic(uility.ErrorMessage{
-			ErrorDescription: err.Error(),
+			ErrorType:        uility.Emergency,
+			ErrorDescription: "转换失败！",
+			ErrorTime:        time.Now(),
 		})
 	}
-	err = f.FragmentUpload(path.Ext(file.Filename))
+	open, err := file.Open()
 	if err != nil {
 		panic(uility.ErrorMessage{
-			ErrorDescription: err.Error(),
+			ErrorType:        uility.Emergency,
+			ErrorDescription: "打开表单文件失败",
+			ErrorTime:        time.Now(),
 		})
 	}
+
+	client := uility.GetClient()
+	if client == nil {
+		panic(uility.ErrorMessage{
+			ErrorType:        uility.Emergency,
+			ErrorDescription: "获取client失败",
+			ErrorTime:        time.Now(),
+		})
+	}
+	// opt 可选
+	resp, err := client.Object.UploadPart(
+		context.Background(), key, UploadID, PartNumbers, bufio.NewReader(open), nil,
+	)
+	if err != nil {
+		panic(uility.ErrorMessage{
+			ErrorType:        uility.Emergency,
+			ErrorDescription: "分片上传失败" + err.Error(),
+			ErrorTime:        time.Now(),
+		})
+	}
+	PartETag := resp.Header.Get("ETag")
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  "分片上传成功！",
+		"data": gin.H{
+			"PartETag":   PartETag,
+			"PartNumber": PartNumbers,
+		},
 	})
+
+	fmt.Println(PartETag)
+
+}
+
+// 分片上传完成
+func UploadsCompletion(c *gin.Context) {
+	key := c.Query("key")
+	UploadID := c.Query("UploadID")
+	P := c.QueryMap("p")
+
+	client := uility.GetClient()
+	if client == nil {
+		panic(uility.ErrorMessage{
+			ErrorType:        uility.Emergency,
+			ErrorDescription: "获取client失败",
+			ErrorTime:        time.Now(),
+		})
+	}
+	opt := &cos.CompleteMultipartUploadOptions{}
+
+	for k, v := range P {
+		atoi, err := strconv.Atoi(k)
+		if err != nil {
+			return
+		}
+		opt.Parts = append(opt.Parts, cos.Object{
+			PartNumber: atoi, ETag: v},
+		)
+	}
+
+	_, _, err := client.Object.CompleteMultipartUpload(
+		context.Background(), key, UploadID, opt,
+	)
+	if err != nil {
+		panic(err)
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "分片上传完成！",
+	})
+
 }
