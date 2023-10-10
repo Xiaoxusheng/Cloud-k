@@ -3,11 +3,13 @@ package models
 import (
 	"Cloud-k/db"
 	"Cloud-k/uility"
+	"fmt"
 	"time"
 )
 
 type LogBasic struct {
 	Id            int           `json:"id,omitempty"`
+	Ip            string        `json:"ip,omitempty"`
 	StatusCode    int           `json:"status_Code,omitempty"`
 	TimeConsuming time.Duration `json:"time_Consuming,omitempty"`
 	UserIdentity  string        `json:"userIdentity,omitempty"`
@@ -20,7 +22,7 @@ type LogBasic struct {
 
 func GetLogBasicList() []LogBasic {
 	list := make([]LogBasic, 0)
-	err := db.Engine.Find(&list)
+	err := db.Engine.Table("log_basic").Find(&list)
 	if err != nil {
 		panic(uility.ErrorMessage{
 			ErrorType:        uility.Error,
@@ -35,6 +37,7 @@ func GetLogBasicList() []LogBasic {
 func InsertLog(l *LogBasic) {
 	_, err := db.Engine.Insert(l)
 	if err != nil {
+		fmt.Println(err)
 		panic(uility.ErrorMessage{
 			ErrorType:        uility.Error,
 			ErrorDescription: "CapacityBasic表查询出错" + err.Error(),

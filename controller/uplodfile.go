@@ -495,6 +495,7 @@ func UploadPart(c *gin.Context) {
 		"msg":  "分片上传初始化成功！",
 		"data": gin.H{
 			"UploadId": UploadID,
+			"key":      key,
 		},
 	})
 
@@ -549,7 +550,9 @@ func FragmentUpload(c *gin.Context) {
 	}
 	// opt 可选
 	resp, err := client.Object.UploadPart(
-		context.Background(), key, UploadID, PartNumbers, bufio.NewReader(open), nil,
+		context.Background(), key, UploadID, PartNumbers, bufio.NewReader(open), &cos.ObjectUploadPartOptions{
+			ContentLength: file.Size,
+		},
 	)
 	if err != nil {
 		panic(uility.ErrorMessage{
@@ -602,7 +605,11 @@ func UploadsCompletion(c *gin.Context) {
 		context.Background(), key, UploadID, opt,
 	)
 	if err != nil {
-		panic(err)
+		panic(uility.ErrorMessage{
+			ErrorType:        uility.Emergency,
+			ErrorDescription: "分片上传完成失败",
+			ErrorTime:        time.Now(),
+		})
 	}
 
 	c.JSON(http.StatusOK, gin.H{
@@ -611,3 +618,6 @@ func UploadsCompletion(c *gin.Context) {
 	})
 
 }
+
+//1 816e8d3b2e8f234d47be0c098cb96dce
+//2 e6acb3d6a70a21c40d993a3a5a5acc22

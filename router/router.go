@@ -18,9 +18,10 @@ func Router() *gin.Engine {
 	r.POST("/v1/user/userLogin", controller.Login)
 	//注册
 	r.POST("/v1/user/userRegister", controller.UserRegister)
+
 	r.Use(middleware.Timeout())
 
-	user := r.Group("/v1/user", middleware.Timeout(), middleware.ParseToken())
+	user := r.Group("/v1/user", middleware.ParseToken())
 	//用户详情
 	user.GET("/userDetail", controller.UserDetail)
 	//退出登录

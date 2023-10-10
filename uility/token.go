@@ -59,7 +59,11 @@ func GetUuid() string {
 }
 
 func GetMd5(pwd string) string {
-	return fmt.Sprintf("%x", md5.Sum([]byte(pwd)))
+	h := md5.New()
+	h.Write([]byte("123456" + key))
+	return fmt.Sprintf("%x", h.Sum(nil))
+
+	//return fmt.Sprintf("%x", md5.Sum([]byte(pwd)))
 }
 
 // 记录日志文件
