@@ -32,7 +32,7 @@ func Banned(c *gin.Context) {
 	})
 }
 
-// 解封用户
+// Unseal 解封用户
 func Unseal(c *gin.Context) {
 	identity := c.Query("identity")
 	if identity == "" {
@@ -57,7 +57,7 @@ func Unseal(c *gin.Context) {
 	})
 }
 
-// 分配容量
+// DivideCapacity分配容量
 func DivideCapacity(c *gin.Context) {
 	//    查询所有用户
 	userList := models.GetUserList()
@@ -79,7 +79,7 @@ func DivideCapacity(c *gin.Context) {
 	})
 }
 
-// 管理员所有查看剩余容量
+// GetResidualCapacity 管理员所有查看剩余容量
 func GetResidualCapacity(c *gin.Context) {
 	list := models.GetResidualCapacityList()
 	c.JSON(http.StatusOK, gin.H{
@@ -91,9 +91,7 @@ func GetResidualCapacity(c *gin.Context) {
 	})
 }
 
-//查看用户数据
-
-// 查看用户访问信息
+// GetUserLogs 查看用户访问信息
 func GetUserLogs(c *gin.Context) {
 	list := models.GetUserLog()
 	c.JSON(http.StatusOK, gin.H{
@@ -105,7 +103,7 @@ func GetUserLogs(c *gin.Context) {
 	})
 }
 
-// GetLogList 系统操作日志查看
+// GetLogList GetLogList 系统操作日志查看
 func GetLogList(c *gin.Context) {
 	list := models.GetLogBasicList()
 	c.JSON(http.StatusOK, gin.H{

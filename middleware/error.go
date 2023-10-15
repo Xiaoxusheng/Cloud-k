@@ -16,10 +16,11 @@ func Error() gin.HandlerFunc {
 		defer func() {
 			go func() {
 				role, ok := c.Get("RuleId")
-				identity, k := c.Get("identity")
+				identity, k := c.Get("UserIdentity")
 				if ok && k {
 					models.InsertLog(&models.LogBasic{
 						Identity:      uility.GetUuid(),
+						Ip:            c.RemoteIP(),
 						Methods:       c.Request.Method,
 						Path:          c.FullPath(),
 						UserIdentity:  identity.(string),
